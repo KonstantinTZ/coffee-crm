@@ -68,3 +68,36 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+<></>
+
+<h1>
+    Система управления кофейней
+</h1>
+
+<hr/>
+
+<p>
+    Данное приложение служит для того что бы помочь управляющим кофейями настроить и оптимизировать бизнес процессы.
+</p>
+
+
+<p>
+    При помощи данного приложения можно:
+</p>
+<ul>
+    <li>
+        Ускорить работу кассира
+    </li>
+    <li>
+        Разделить выполнение заказов между бариста
+    </li>
+    <li>
+        Проверять заказы при выдаче
+    </li>
+    <li>
+        Организовать электронную очередь
+    </li>
+
+</ul>
