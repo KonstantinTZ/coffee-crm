@@ -1,47 +1,62 @@
-export const menuArray = [
+export const menuPresetArray = [
     {
         id: 1,
         category: 'coffee',
         productName: 'Кофе Американо L',
         volume: 400,
-        currency: 'AMD',
+        measure: 'мл.',
+        currency: 'у.е.',
         costPrice:500,
-        sellPrice: 800
+        sellPrice: 800,
+        imgPath: 'menu-item-coffee-l',
+        extraSettings: false,
     },
     {
         id: 2,
         category: 'coffee',
         productName: 'Кофе Американо M',
         volume: 300,
-        currency: 'AMD',
+        measure: 'мл.',
+        currency: 'у.е.',
         costPrice:400,
-        sellPrice: 600
+        sellPrice: 600,
+        imgPath: 'menu-item-coffee-m',
+        extraSettings: false,
     },
     {
         id: 3,
         category: 'coffee',
         productName: 'Кофе Американо S',
         volume: 250,
-        currency: 'AMD',
+        measure: 'мл.',
+        currency: 'у.е.',
         costPrice:300,
-        sellPrice: 500
+        sellPrice: 500,
+        imgPath: 'menu-item-coffee-s',
+        extraSettings: false,
     },
     {
         id: 4,
         category: 'coffee',
         productName: 'Шоколадный батончик Snickers',
         volume: 100,
-        currency: 'AMD',
+        measure: 'гр.',
+        currency: 'у.е.',
         costPrice:100,
-        sellPrice: 800
+        sellPrice: 800,
+        imgPath: 'menu-item-chocolate-1',
+        extraSettings: false,
     },
     {
         id: 5,
         category: 'coffee',
         productName: 'Печенье Oreo',
         volume: 100,
-        currency: 'AMD',
+        measure: 'мл.',
+        currency: 'у.е.',
         costPrice:300,
-        sellPrice: 400
+        sellPrice: 400,
+        imgPath: 'menu-item-chocolate-2',
+        extraSettings: false,
     }
 ]
