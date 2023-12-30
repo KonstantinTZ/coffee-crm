@@ -1,13 +1,19 @@
 import React from 'react';
 import './BasketPaige.css';
 import { BasketRow } from './BasketRow/BasketRow';
+import { observer } from "mobx-react-lite"
+import mainStore from '../../store/mainStore';
 
-export function BasketPaige() {
+
+export const BasketPaige = observer(() =>{
   return (
+    <>
+    {mainStore.basketArray.length ? 
+
     <div className="container">
-      <div className="row mb-5">
+      <div className="row mb-4">
         <h1 className='text-danger '>
-          Заказ: V95
+          Проверьте заказ
         </h1>
       </div>
       <div className="row mb-5">
@@ -21,14 +27,26 @@ export function BasketPaige() {
             </tr>
           </thead>
           <tbody>
-            <BasketRow rowNumber={1}  positionName={"Кофе капучино S"}  positionQuantity={3} positionSumm={2000}/>
-            <BasketRow rowNumber={2}  positionName={"Шоколад MARS"}  positionQuantity={1} positionSumm={1000}/>
+            
+          {mainStore.basketArray.map((item) => ( 
+            <BasketRow 
+            rowNumber={mainStore.basketArray.indexOf(item) + 1}  
+            positionName={item.productName}  
+            positionQuantity={item.quantity} 
+            positionSumm={item.sellPrice * item.quantity}
+            key={item.id}
+            />
+
+          ))}
+
+            {/* <BasketRow rowNumber={1}  positionName={"Кофе капучино S"}  positionQuantity={3} positionSumm={2000}/>
+            <BasketRow rowNumber={2}  positionName={"Шоколад MARS"}  positionQuantity={1} positionSumm={1000}/> */}
             
             <tr>
               <th scope="row">Итого</th>
               <td></td>
               <td></td>
-              <th>12000 др.</th>
+              <th>{mainStore.orderAmount} </th>
             </tr>
           </tbody>
         </table>
@@ -47,14 +65,22 @@ export function BasketPaige() {
       </div>
       <div className="row mb-5">
         <h2 className="text-danger">
-          К оплате: 12000 др.
+          К оплате: {mainStore.orderAmount}
         </h2>
       </div>
       <div className="row ">
         <div className="btn-group">
-          <button type="button" class="btn btn-warning p-4">Оплата завершена</button>
+          <button type="button" class="btn btn-warning p-4" onClick={()=> {console.log('click')}}>Оплата завершена</button>
         </div>
       </div>
     </div>
+    : 
+    <div className="container">
+      <h2 className='text-secondary'>
+        Добавьте позиции из меню
+      </h2>
+    </div>
+    }
+    </>
   );
-}
+})

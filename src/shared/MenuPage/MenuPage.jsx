@@ -1,18 +1,26 @@
-import React, { } from 'react';
+import React, {useEffect} from 'react';
 import './MenuPage.css';
 import { MenuItem } from '../../../src/shared/MenuPage/MenuItem'
-import { menuPresetArray } from '../../store/menuPreset'
+import { observer } from "mobx-react-lite"
+import mainStore from '../../store/mainStore';
 
-export function MenuPage() {
-  
+
+
+export const MenuPage = observer(() => {
+
+  useEffect(() => {
+    mainStore.copyMenuArray();
+
+  }, [])
 
 
   return (
     <div className="row row-cols-auto">
 
-      {menuPresetArray.map((item) => (
+      {mainStore.menuArray.map((item) => (
         
         <MenuItem 
+        id={item.id}
         imgPath={item.imgPath} 
         productName={item.productName} 
         sellPrice={item.sellPrice} 
@@ -20,6 +28,7 @@ export function MenuPage() {
         currency={item.currency} 
         volume={item.volume} 
         measure={item.measure}
+        quantity={item.quantity}
         />
         
       ))}
@@ -27,4 +36,5 @@ export function MenuPage() {
     </div>
 
   );
-}
+})
+

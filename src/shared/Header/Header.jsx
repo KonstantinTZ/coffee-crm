@@ -1,8 +1,10 @@
 import React from 'react';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
+import mainStore from '../../store/mainStore';
+import { observer } from "mobx-react-lite"
 
-export function Header() {
+export const Header = observer(() => {
   return (
     <div className="header container sticky-top">
 
@@ -15,20 +17,23 @@ export function Header() {
           <div className="collapse navbar-collapse" id="navbarColor02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <NavLink className="nav-link"  activeclassname={"active"} to="/menu">Меню</NavLink>
+                <NavLink className="nav-link" activeclassname={"active"} to="/menu">Меню</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link"  activeclassname={"active"} to="/kitchen">Кухня</NavLink>
+                <NavLink className="nav-link" activeclassname={"active"} to="/kitchen">Кухня</NavLink>
               </li>
               <li className="nav-item">
-              <NavLink className="nav-link"  activeclassname={"active"} to="/release">Выдача</NavLink>
+                <NavLink className="nav-link" activeclassname={"active"} to="/release">Выдача</NavLink>
               </li>
               <li className="nav-item">
-              <NavLink className="nav-link"  activeclassname={"active"} to="/order-board">Табло</NavLink>
+                <NavLink className="nav-link" activeclassname={"active"} to="/order-board">Табло</NavLink>
               </li>
             </ul>
             <form className="d-flex">
-              <NavLink className="btn btn-success"  activeclassname={"active"} to="/basket">Заказ</NavLink>
+              <NavLink className="btn btn-success" activeclassname={"active"} to="/basket">
+                Заказ&nbsp;
+                {mainStore.basketArray.length ? <span class="badge bg-danger">{`${mainStore.basketArray.length}`}</span> : ''}
+              </NavLink>
             </form>
           </div>
         </div>
@@ -36,4 +41,4 @@ export function Header() {
 
     </div>
   );
-}
+})
