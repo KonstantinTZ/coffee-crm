@@ -3,11 +3,13 @@ import './MenuItem.css';
 import { observer } from "mobx-react-lite"
 import  mainStore  from '../../../store/mainStore';
 
+
 export const MenuItem = observer(({id, imgPath, productName, sellPrice, currency, volume, measure, quantity})=> {
 
   function increseBtnHandler (id) {
     mainStore.changeQuantityFn(id, true);
     mainStore.addToBasketFn(id)
+
   }
 
   function decreseBtnHandler (id) {

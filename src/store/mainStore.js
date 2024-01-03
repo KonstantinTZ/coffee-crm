@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { menuPresetArray } from './menuPreset'
+import { v4 as uuidv4 } from 'uuid';
+import { ticketGenerator } from '../utils/ticketGenerator'
 
 class mainStore {
 
@@ -18,6 +20,7 @@ class mainStore {
         this.menuArray = JSON.parse(JSON.stringify(menuPresetArray))
         this.menuArray.forEach(function (item) {
             item.quantity = 0
+            item.prepaired = false
         })
     }
 
@@ -78,17 +81,76 @@ class mainStore {
 
         // console.log(totalSellPrice, totalQuantity)
 
-        this.basketArray.forEach((item) =>item.productAmount = item.quantity * item.sellPrice)
-        console.log(this.basketArray)
+        this.basketArray.forEach((item) => item.productAmount = item.quantity * item.sellPrice)
+
 
         let totalAmount = this.basketArray.reduce((summ, item) => summ = summ + item.productAmount, 0)
 
         return totalAmount
     }
 
+    get totalOrderQuantity() {
+        let totalOrderQuantity = this.basketArray.reduce((summ, item) => summ = summ + item.quantity, 0)
+        return totalOrderQuantity
+    }
+
+    basketArrayCleaner() {
+        this.basketArray.splice(0, this.basketArray.length);
+    }
+
 
     // ====================================================================
     // basket operations end
+
+    // ====================================================================
+    // Order operations start
+
+    // newOrder = {
+    //     orderId: '',
+    //     orderNumber: 'N95',
+    //     orderCreatedAt: '',
+    //     orderPrepairedAt: '',
+    //     orderReleasedAt: '',
+    //     paidBy: '',
+    //     orderTotlaAmaunt: 1,
+    //     orderPositionsArray: []
+
+    // }
+
+
+    orderArray = []
+    paymentMethodVar = ''
+
+    updateOrderByPaymentMethod(value) {
+        this.paymentMethodVar = value;
+    }
+
+    addToOrderArray() {
+        let newOrder = {};
+
+        newOrder.orderId = uuidv4();
+        newOrder.orderNumber = ticketGenerator();
+        newOrder.orderCreatedAt = new Date();
+        newOrder.orderPrepairedAt = '';
+        newOrder.orderReleasedAt = '';
+        newOrder.orderTotlaAmaunt = this.orderAmount;
+        newOrder.orderItemsArray = [...this.basketArray]
+        newOrder.orderPaidBy = this.paymentMethodVar
+
+        this.orderArray.push(newOrder)
+
+        this.basketArrayCleaner()
+        this.copyMenuArray()
+
+    }
+
+
+
+
+    // ====================================================================
+    // Order operations end
+
+
 
 
     // пока не используем

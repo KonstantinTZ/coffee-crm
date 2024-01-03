@@ -8,7 +8,7 @@ export const Header = observer(() => {
   return (
     <div className="header container sticky-top">
 
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient">
         <div className="container-fluid">
           <a className="navbar-brand" href="#1">Кофейня 1</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,9 +30,9 @@ export const Header = observer(() => {
               </li>
             </ul>
             <form className="d-flex">
-              <NavLink className="btn btn-success" activeclassname={"active"} to="/basket">
+              <NavLink className="btn btn-success bg-gradient" activeclassname={"active"} to="/basket">
                 Заказ&nbsp;
-                {mainStore.basketArray.length ? <span class="badge bg-danger">{`${mainStore.basketArray.length}`}</span> : ''}
+                {mainStore.basketArray.length ? <span className="badge bg-danger">{`${mainStore.totalOrderQuantity}`}</span> : ''}
               </NavLink>
             </form>
           </div>
