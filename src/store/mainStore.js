@@ -6,7 +6,7 @@ import { ticketGenerator } from '../utils/ticketGenerator'
 class mainStore {
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this, {}, { deep: true })
     }
 
     // ====================================================================
@@ -21,6 +21,8 @@ class mainStore {
         this.menuArray.forEach(function (item) {
             item.quantity = 0
             item.prepaired = false
+            // item.id = uuidv4();
+            // во избежании ошибки дублирования id при ручном вводе.
         })
     }
 
@@ -96,6 +98,7 @@ class mainStore {
 
     basketArrayCleaner() {
         this.basketArray.splice(0, this.basketArray.length);
+        this.paymentMethodVar = ''
     }
 
 
@@ -144,11 +147,81 @@ class mainStore {
 
     }
 
+    setOrderItemSetPrepaired(orderItemId, menuItemid) {
+        // не нравится эта функция, но работает
 
+        // при клике фильтруем массив с меню и выделяем объект с заказом
+
+        const pickedItem = this.orderArray.find(function (orderItem) {
+            return orderItem.orderId === orderItemId;
+        });
+
+        pickedItem.orderItemsArray = pickedItem.orderItemsArray.map(menuItem => menuItem.id === menuItemid ? { ...menuItem, prepaired: true } : menuItem)
+
+        let counter = 0
+
+        for (const item of pickedItem.orderItemsArray) {
+            if (item.prepaired === true) {
+                counter++
+            }
+
+        }
+
+        pickedItem.prepairedMenuItems = counter
+
+    }
 
 
     // ====================================================================
     // Order operations end
+
+    // ====================================================================
+    // ReleaseOrder operations start
+
+    releaseOrderArray = []
+
+    addToReleaseOrderArray(orderItemId) {
+        const pickedItem = this.orderArray.find(function (orderItem) {
+            return orderItem.orderId === orderItemId;
+        });
+
+        this.releaseOrderArray.push(pickedItem)
+
+        this.orderArray = this.orderArray.filter(orderItem => orderItem.orderId !== orderItemId)
+
+
+
+    }
+
+
+    // ====================================================================
+    // ReleaseOrder operations end
+
+    
+
+
+    // ====================================================================
+    // History operations start
+
+    historyArray = []
+
+    addToHistoryArray(orderItemId) {
+        const pickedItem = this.releaseOrderArray.find(function (orderItem) {
+            return orderItem.orderId === orderItemId;
+        });
+
+        this.historyArray.push(pickedItem)
+
+        this.releaseOrderArray = this.releaseOrderArray.filter(orderItem => orderItem.orderId !== orderItemId)
+
+
+
+    }
+
+
+
+    // ====================================================================
+    // History operations end
 
 
 

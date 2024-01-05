@@ -8,7 +8,7 @@ export const Header = observer(() => {
   return (
     <div className="header container sticky-top">
 
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient pt-3 pb-3">
         <div className="container-fluid">
           <a className="navbar-brand" href="#1">Кофейня 1</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,10 +20,24 @@ export const Header = observer(() => {
                 <NavLink className="nav-link" activeclassname={"active"} to="/menu">Меню</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" activeclassname={"active"} to="/kitchen">Кухня</NavLink>
+                <NavLink className="nav-link position-relative" activeclassname={"active"} to="/kitchen">
+                  Кухня&nbsp;
+                    {mainStore.orderArray.length ?  
+                  <span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger">
+                    {`${mainStore.orderArray.length}`}
+                    <span className="visually-hidden">Колличество заказов на кухне</span>
+                  </span> : ''}
+                </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" activeclassname={"active"} to="/release">Выдача</NavLink>
+                <NavLink className="nav-link position-relative" activeclassname={"active"} to="/release">
+                  Выдача&nbsp;
+                    {mainStore.releaseOrderArray.length ?  
+                  <span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger">
+                    {`${mainStore.releaseOrderArray.length}`}
+                    <span className="visually-hidden">Колличество заказов на выдачу</span>
+                  </span> : ''}
+                  </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" activeclassname={"active"} to="/order-board">Табло</NavLink>
