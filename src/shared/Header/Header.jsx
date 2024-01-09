@@ -42,6 +42,9 @@ export const Header = observer(() => {
               <li className="nav-item">
                 <NavLink className="nav-link" activeclassname={"active"} to="/order-board">Табло</NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" activeclassname={"active"} to="/history">История</NavLink>
+              </li>
             </ul>
             <form className="d-flex">
               <NavLink className="btn btn-success bg-gradient" activeclassname={"active"} to="/basket">

@@ -81,7 +81,7 @@ class mainStore {
         // let totalSellPrice = this.basketArray.reduce((summ, item) => summ = summ + item.sellPrice, 0)
         // let totalQuantity = this.basketArray.reduce((summ, item) => summ = summ + item.quantity, 0)
 
-        // console.log(totalSellPrice, totalQuantity)
+
 
         this.basketArray.forEach((item) => item.productAmount = item.quantity * item.sellPrice)
 
@@ -107,19 +107,6 @@ class mainStore {
 
     // ====================================================================
     // Order operations start
-
-    // newOrder = {
-    //     orderId: '',
-    //     orderNumber: 'N95',
-    //     orderCreatedAt: '',
-    //     orderPrepairedAt: '',
-    //     orderReleasedAt: '',
-    //     paidBy: '',
-    //     orderTotlaAmaunt: 1,
-    //     orderPositionsArray: []
-
-    // }
-
 
     orderArray = []
     paymentMethodVar = ''
@@ -197,13 +184,56 @@ class mainStore {
     // ====================================================================
     // ReleaseOrder operations end
 
-    
+
 
 
     // ====================================================================
     // History operations start
 
-    historyArray = []
+    historyArray = [
+        {
+            orderCreatedAt: new Date("2024-01-09T09:27:25.758Z"),
+            orderId: "24d2b8ee-14d5-475a-95f3-0d61b85ca818",
+            orderItemsArray: [{
+                category: "coffee",
+                costPrice: 500,
+                currency: "у.е.",
+                extraSettings: false,
+                id: 1,
+                imgPath: "menu-item-coffee-l",
+                measure: "мл.",
+                prepaired: true,
+                productAmount: 1600,
+                productName: "Кофе Американо L",
+                quantity: 20,
+                sellPrice: 800,
+                volume: 400,
+            }],
+            orderNumber: "L50",
+            orderPaidBy: "by card",
+            orderPrepairedAt: "",
+            orderReleasedAt: "",
+            orderTotlaAmaunt: 1600,
+            prepairedMenuItems: 1,
+        }
+    ]
+
+    copyHistoryArray = []
+
+    copyHistoryArrayFn () {
+        this.copyHistoryArray = structuredClone(this.historyArray)
+        console.log('added copyHistoryArray', this.copyHistoryArray)
+
+    }
+
+    cancelChangesHistoryArrayFn () {
+        this.historyArray.splice(0, this.historyArray.length);
+        this.historyArray = Array.from(this.copyHistoryArray);
+        this.copyHistoryArray.splice(0, this.copyHistoryArray.length);
+        // console.log('removed copyHistoryArray', this.copyHistoryArray)
+        console.log('historyArray', this.historyArray)
+
+    }
 
     addToHistoryArray(orderItemId) {
         const pickedItem = this.releaseOrderArray.find(function (orderItem) {
@@ -217,6 +247,29 @@ class mainStore {
 
 
     }
+
+
+    changeHistoryQuantityFn(orderItemId, menuItemid) {
+        // не нравится эта функция, но работает
+
+        // при клике фильтруем массив с меню и выделяем объект с заказом
+
+        const pickedItem = this.historyArray.find(function (orderItem) {
+            return orderItem.orderId === orderItemId;
+        });
+
+        pickedItem.orderItemsArray = pickedItem.orderItemsArray.map(menuItem => menuItem.id === menuItemid ? { ...menuItem, quantity: (menuItem.quantity > 0 ? menuItem.quantity - 1 : menuItem.quantity) } : menuItem)
+        
+     
+        // меняем общую сумму заказа
+        pickedItem.orderItemsArray.forEach((item) => item.productAmount = item.quantity * item.sellPrice)
+
+        pickedItem.orderTotlaAmaunt = pickedItem.orderItemsArray.reduce((summ, item) => summ = summ + item.productAmount, 0)
+    
+
+    }
+
+    
 
 
 
@@ -235,13 +288,13 @@ class mainStore {
             return
         }
 
-        console.log(this.menuArray)
+       
 
     }
 
     removeMenuItem(id) {
         this.menuArray = this.menuArray.filter(menuItem => menuItem.id !== id)
-        console.log('this.menuArray удаляем из незаконченных дел', this.menuArray)
+
     }
 
 

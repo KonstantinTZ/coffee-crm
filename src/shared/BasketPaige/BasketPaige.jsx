@@ -22,7 +22,7 @@ export const BasketPaige = observer(() => {
             </h1>
           </div>
           <div className="row mb-5">
-            <table className="table table-striped">
+            <table className="table table-striped align-middle">
               <thead className="table-warning">
                 <tr>
                   <th scope="col">#</th>
@@ -41,6 +41,7 @@ export const BasketPaige = observer(() => {
                     positionSumm={item.sellPrice * item.quantity}
                     key={item.id}
                     id={item.id}
+                    mode = {'basket'}
                   />
 
                 ))}

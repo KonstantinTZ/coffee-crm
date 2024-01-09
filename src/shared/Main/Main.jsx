@@ -6,6 +6,7 @@ import { OrderBoardPage } from '../OrderBoardPage/OrderBoardPage';
 import { KitchenPage } from '../KitchenPage/KitchenPage';
 import {ReleaseOrderPage} from '../ReleaseOrderPage'
 import {BasketPaige} from '../BasketPaige'
+import {HistoryPage} from '../HistoryPage'
 import mainStore from '../../store/mainStore';
 
 export function Main() {
@@ -23,6 +24,7 @@ export function Main() {
         <Route path="release" element={<ReleaseOrderPage />} />
         <Route path="order-board" element={<OrderBoardPage/>} />
         <Route path="basket" element={<BasketPaige/>} />
+        <Route path="history" element={<HistoryPage/>} />
       </Routes>
     
     </div>
