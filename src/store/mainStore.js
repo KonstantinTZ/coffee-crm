@@ -5,307 +5,330 @@ import { ticketGenerator } from '../utils/ticketGenerator'
 
 class mainStore {
 
-    constructor() {
-        makeAutoObservable(this, {}, { deep: true })
+  constructor() {
+    makeAutoObservable(this, {}, { deep: true })
+  }
+
+  // ====================================================================
+  // Menu operations start
+
+  menuArray = []
+
+
+
+  copyMenuArray() {
+    this.menuArray = JSON.parse(JSON.stringify(menuPresetArray))
+    this.menuArray.forEach(function (item) {
+      item.quantity = 0
+      item.prepaired = false
+      // item.id = uuidv4();
+      // во избежании ошибки дублирования id при ручном вводе.
+    })
+  }
+
+
+
+  changeQuantityFn(id, direction) {
+
+    if (direction === true) {
+      this.menuArray = this.menuArray.map(menuItem => menuItem.id === id ? { ...menuItem, quantity: (menuItem.quantity < 10 ? menuItem.quantity + 1 : menuItem.quantity) } : menuItem)
+      // с ограничением на максимальный счетчик 10
+    } else if (direction === false) {
+      this.menuArray = this.menuArray.map(menuItem => menuItem.id === id ? { ...menuItem, quantity: (menuItem.quantity > 0 ? menuItem.quantity - 1 : menuItem.quantity) } : menuItem)
+      // с ограничением на минимальный счетчик 0
     }
 
-    // ====================================================================
-    // Menu operations start
+  }
 
-    menuArray = []
+  // ====================================================================
+  // Menu operations end
 
+  // ====================================================================
+  // basket operations start
 
+  basketArray = []
 
-    copyMenuArray() {
-        this.menuArray = JSON.parse(JSON.stringify(menuPresetArray))
-        this.menuArray.forEach(function (item) {
-            item.quantity = 0
-            item.prepaired = false
-            // item.id = uuidv4();
-            // во избежании ошибки дублирования id при ручном вводе.
-        })
+  addToBasketFn(id) {
+
+    // при клике фильтруем массив с меню и выделяем объект с продуктом
+
+    const pickedItem = this.menuArray.find(function (item) {
+      return item.id === id;
+    });
+
+    // находим в массиве корзины элемент с таким же АйДи
+    const equalityItemInBasketArray = this.basketArray.find(basketItem => basketItem.id === id);
+    // если он существует, то методом мап обновляем его значения
+    if (equalityItemInBasketArray) {
+      this.basketArray = this.basketArray.map(basketItem => basketItem.id === id ? { ...basketItem, quantity: pickedItem.quantity } : basketItem)
+
+      // в противном случае добовляем элемент из меню
+    } else {
+      this.basketArray.push(pickedItem);
     }
 
+    // при удалении получается лишняя операция !!!!
 
-
-    changeQuantityFn(id, direction) {
-
-        if (direction === true) {
-            this.menuArray = this.menuArray.map(menuItem => menuItem.id === id ? { ...menuItem, quantity: (menuItem.quantity < 10 ? menuItem.quantity + 1 : menuItem.quantity) } : menuItem)
-            // с ограничением на максимальный счетчик 10
-        } else if (direction === false) {
-            this.menuArray = this.menuArray.map(menuItem => menuItem.id === id ? { ...menuItem, quantity: (menuItem.quantity > 0 ? menuItem.quantity - 1 : menuItem.quantity) } : menuItem)
-            // с ограничением на минимальный счетчик 0
-        }
-
-    }
-
-    // ====================================================================
-    // Menu operations end
-
-    // ====================================================================
-    // basket operations start
-
-    basketArray = []
-
-    addToBasketFn(id) {
-
-        // при клике фильтруем массив с меню и выделяем объект с продуктом
-
-        const pickedItem = this.menuArray.find(function (item) {
-            return item.id === id;
-        });
-
-        // находим в массиве корзины элемент с таким же АйДи
-        const equalityItemInBasketArray = this.basketArray.find(basketItem => basketItem.id === id);
-        // если он существует, то методом мап обновляем его значения
-        if (equalityItemInBasketArray) {
-            this.basketArray = this.basketArray.map(basketItem => basketItem.id === id ? { ...basketItem, quantity: pickedItem.quantity } : basketItem)
-
-            // в противном случае добовляем элемент из меню
-        } else {
-            this.basketArray.push(pickedItem);
-        }
-
-        // при удалении получается лишняя операция !!!!
-
-        // если количество в элементе меню 0, тогда находим такой же элемент в корзине и удаляем его
-        if (pickedItem.quantity === 0) {
-            this.basketArray = this.basketArray.filter(basketItem => basketItem.id !== id)
-        }
-
-
-    }
-
-    get orderAmount() {
-        // let totalSellPrice = this.basketArray.reduce((summ, item) => summ = summ + item.sellPrice, 0)
-        // let totalQuantity = this.basketArray.reduce((summ, item) => summ = summ + item.quantity, 0)
-
-
-
-        this.basketArray.forEach((item) => item.productAmount = item.quantity * item.sellPrice)
-
-
-        let totalAmount = this.basketArray.reduce((summ, item) => summ = summ + item.productAmount, 0)
-
-        return totalAmount
-    }
-
-    get totalOrderQuantity() {
-        let totalOrderQuantity = this.basketArray.reduce((summ, item) => summ = summ + item.quantity, 0)
-        return totalOrderQuantity
-    }
-
-    basketArrayCleaner() {
-        this.basketArray.splice(0, this.basketArray.length);
-        this.paymentMethodVar = ''
+    // если количество в элементе меню 0, тогда находим такой же элемент в корзине и удаляем его
+    if (pickedItem.quantity === 0) {
+      this.basketArray = this.basketArray.filter(basketItem => basketItem.id !== id)
     }
 
 
-    // ====================================================================
-    // basket operations end
+  }
 
-    // ====================================================================
-    // Order operations start
-
-    orderArray = []
-    paymentMethodVar = ''
-
-    updateOrderByPaymentMethod(value) {
-        this.paymentMethodVar = value;
-    }
-
-    addToOrderArray() {
-        let newOrder = {};
-
-        newOrder.orderId = uuidv4();
-        newOrder.orderNumber = ticketGenerator();
-        newOrder.orderCreatedAt = new Date();
-        newOrder.orderPrepairedAt = '';
-        newOrder.orderReleasedAt = '';
-        newOrder.orderTotlaAmaunt = this.orderAmount;
-        newOrder.orderItemsArray = [...this.basketArray]
-        newOrder.orderPaidBy = this.paymentMethodVar
-
-        this.orderArray.push(newOrder)
-
-        this.basketArrayCleaner()
-        this.copyMenuArray()
-
-    }
-
-    setOrderItemSetPrepaired(orderItemId, menuItemid) {
-        // не нравится эта функция, но работает
-
-        // при клике фильтруем массив с меню и выделяем объект с заказом
-
-        const pickedItem = this.orderArray.find(function (orderItem) {
-            return orderItem.orderId === orderItemId;
-        });
-
-        pickedItem.orderItemsArray = pickedItem.orderItemsArray.map(menuItem => menuItem.id === menuItemid ? { ...menuItem, prepaired: true } : menuItem)
-
-        let counter = 0
-
-        for (const item of pickedItem.orderItemsArray) {
-            if (item.prepaired === true) {
-                counter++
-            }
-
-        }
-
-        pickedItem.prepairedMenuItems = counter
-
-    }
-
-
-    // ====================================================================
-    // Order operations end
-
-    // ====================================================================
-    // ReleaseOrder operations start
-
-    releaseOrderArray = []
-
-    addToReleaseOrderArray(orderItemId) {
-        const pickedItem = this.orderArray.find(function (orderItem) {
-            return orderItem.orderId === orderItemId;
-        });
-
-        this.releaseOrderArray.push(pickedItem)
-
-        this.orderArray = this.orderArray.filter(orderItem => orderItem.orderId !== orderItemId)
+  get orderAmount() {
+    // let totalSellPrice = this.basketArray.reduce((summ, item) => summ = summ + item.sellPrice, 0)
+    // let totalQuantity = this.basketArray.reduce((summ, item) => summ = summ + item.quantity, 0)
 
 
 
-    }
+    this.basketArray.forEach((item) => item.productAmount = item.quantity * item.sellPrice)
 
 
-    // ====================================================================
-    // ReleaseOrder operations end
+    let totalAmount = this.basketArray.reduce((summ, item) => summ = summ + item.productAmount, 0)
+
+    return totalAmount
+  }
+
+  get totalOrderQuantity() {
+    let totalOrderQuantity = this.basketArray.reduce((summ, item) => summ = summ + item.quantity, 0)
+    return totalOrderQuantity
+  }
+
+  basketArrayCleaner() {
+    this.basketArray.splice(0, this.basketArray.length);
+    this.paymentMethodVar = ''
+  }
 
 
+  // ====================================================================
+  // basket operations end
 
+  // ====================================================================
+  // Order operations start
 
-    // ====================================================================
-    // History operations start
+  orderArray = []
+  paymentMethodVar = ''
 
-    historyArray = [
-        {
-            orderCreatedAt: new Date("2024-01-09T09:27:25.758Z"),
-            orderId: "24d2b8ee-14d5-475a-95f3-0d61b85ca818",
-            orderItemsArray: [{
-                category: "coffee",
-                costPrice: 500,
-                currency: "у.е.",
-                extraSettings: false,
-                id: 1,
-                imgPath: "menu-item-coffee-l",
-                measure: "мл.",
-                prepaired: true,
-                productAmount: 1600,
-                productName: "Кофе Американо L",
-                quantity: 20,
-                sellPrice: 800,
-                volume: 400,
-            }],
-            orderNumber: "L50",
-            orderPaidBy: "by card",
-            orderPrepairedAt: "",
-            orderReleasedAt: "",
-            orderTotlaAmaunt: 1600,
-            prepairedMenuItems: 1,
-        }
-    ]
+  updateOrderByPaymentMethod(value) {
+    this.paymentMethodVar = value;
+  }
 
-    copyHistoryArray = []
+  addToOrderArray() {
+    let newOrder = {};
 
-    copyHistoryArrayFn () {
-        this.copyHistoryArray = structuredClone(this.historyArray)
-        console.log('added copyHistoryArray', this.copyHistoryArray)
+    newOrder.orderId = uuidv4();
+    newOrder.orderNumber = ticketGenerator();
+    newOrder.orderCreatedAt = new Date();
+    newOrder.orderPrepairedAt = '';
+    newOrder.orderReleasedAt = '';
+    newOrder.orderTotlaAmaunt = this.orderAmount;
+    newOrder.orderPaidBy = this.paymentMethodVar
+    newOrder.orderItemsArray = [...this.basketArray]
+    newOrder.prepairedMenuItems = 0
+
+    this.orderArray.push(newOrder)
+
+    this.basketArrayCleaner()
+    this.copyMenuArray()
+
+  }
+
+  setOrderItemSetPrepaired(orderItemId, menuItemid) {
+    // не нравится эта функция, но работает
+
+    // при клике фильтруем массив с меню и выделяем объект с заказом
+
+    const pickedItem = this.orderArray.find(function (orderItem) {
+      return orderItem.orderId === orderItemId;
+    });
+
+    pickedItem.orderItemsArray = pickedItem.orderItemsArray.map(menuItem => menuItem.id === menuItemid ? { ...menuItem, prepaired: true } : menuItem)
+
+    let counter = 0
+
+    for (const item of pickedItem.orderItemsArray) {
+      if (item.prepaired === true) {
+        counter++
+      }
 
     }
 
-    cancelChangesHistoryArrayFn () {
-        this.historyArray.splice(0, this.historyArray.length);
-        this.historyArray = Array.from(this.copyHistoryArray);
-        this.copyHistoryArray.splice(0, this.copyHistoryArray.length);
-        // console.log('removed copyHistoryArray', this.copyHistoryArray)
-        console.log('historyArray', this.historyArray)
+    pickedItem.prepairedMenuItems = counter
 
+  }
+
+
+  // ====================================================================
+  // Order operations end
+
+  // ====================================================================
+  // ReleaseOrder operations start
+
+  releaseOrderArray = []
+
+  addToReleaseOrderArray(orderItemId) {
+    const pickedItem = this.orderArray.find(function (orderItem) {
+      return orderItem.orderId === orderItemId;
+    });
+
+    pickedItem.orderPrepairedAt = new Date ()
+
+    this.releaseOrderArray.push(pickedItem)
+
+    this.orderArray = this.orderArray.filter(orderItem => orderItem.orderId !== orderItemId)
+
+
+
+  }
+
+
+  // ====================================================================
+  // ReleaseOrder operations end
+
+
+
+
+  // ====================================================================
+  // History operations start
+
+  historyArray = [
+    {
+      orderCreatedAt: new Date("2024-01-09T09:27:25.758Z"),
+      orderId: "24d2b8ee-14d5-475a-95f3-0d61b85ca818",
+      orderItemsArray: [{
+        category: "coffee",
+        costPrice: 500,
+        currency: "у.е.",
+        extraSettings: false,
+        id: 1,
+        imgPath: "menu-item-coffee-l",
+        measure: "мл.",
+        prepaired: true,
+        productAmount: 1600,
+        productName: "Кофе Американо L",
+        quantity: 2,
+        sellPrice: 800,
+        volume: 400,
+      }],
+      orderNumber: "L50",
+      orderPaidBy: "by card",
+      orderPrepairedAt: "",
+      orderReleasedAt: "",
+      orderTotlaAmaunt: 1600,
+      prepairedMenuItems: 1,
+    }
+  ]
+
+  copyHistoryArray = []
+  // своеобрвзный карман
+
+  copyHistoryArrayFn() {
+    this.copyHistoryArray = JSON.parse(JSON.stringify(this.historyArray))
+  }
+
+  cancelChangesHistoryArrayFn() {
+    this.historyArray.splice(0, this.historyArray.length);
+    this.historyArray = JSON.parse(JSON.stringify(this.copyHistoryArray))
+    this.historyArray.forEach((item) => item.orderCreatedAt = new Date(item.orderCreatedAt))
+    // иначе дата в типе строка и выходит ошибка
+    this.copyHistoryArray.splice(0, this.copyHistoryArray.length);
+  }
+
+  addToHistoryArray(orderItemId) {
+    const pickedItem = this.releaseOrderArray.find(function (orderItem) {
+      return orderItem.orderId === orderItemId;
+    });
+
+    pickedItem.orderReleasedAt = new Date ()
+    delete  pickedItem.prepairedMenuItems;
+    this.historyArray.unshift(pickedItem);
+
+    this.releaseOrderArray = this.releaseOrderArray.filter(orderItem => orderItem.orderId !== orderItemId);
+
+  }
+
+
+  changeHistoryQuantityFn(orderItemId, menuItemid) {
+    // не нравится эта функция, но работает
+
+    // при клике фильтруем массив с меню и выделяем объект с заказом
+
+    const pickedItem = this.historyArray.find(function (orderItem) {
+      return orderItem.orderId === orderItemId;
+    });
+
+    pickedItem.orderItemsArray = pickedItem.orderItemsArray.map(menuItem => menuItem.id === menuItemid ? { ...menuItem, quantity: (menuItem.quantity > 0 ? menuItem.quantity - 1 : menuItem.quantity) } : menuItem)
+    for (let item of pickedItem.orderItemsArray) {
+      if (item.quantity === 0) {
+        pickedItem.orderItemsArray = pickedItem.orderItemsArray.filter(item => item.id !== menuItemid)
+      }
     }
 
-    addToHistoryArray(orderItemId) {
-        const pickedItem = this.releaseOrderArray.find(function (orderItem) {
-            return orderItem.orderId === orderItemId;
-        });
 
-        this.historyArray.push(pickedItem)
+    // меняем общую сумму заказа
+    pickedItem.orderItemsArray.forEach((item) => item.productAmount = item.quantity * item.sellPrice)
 
-        this.releaseOrderArray = this.releaseOrderArray.filter(orderItem => orderItem.orderId !== orderItemId)
+    pickedItem.orderTotlaAmaunt = pickedItem.orderItemsArray.reduce((summ, item) => summ = summ + item.productAmount, 0)
 
 
 
+
+  }
+
+
+  historyChangeCounter(orderItemId) {
+
+    const pickedItem = this.historyArray.find(function (orderItem) {
+      return orderItem.orderId === orderItemId;
+    });
+
+    let copyPickedItem = this.copyHistoryArray.find(function (orderItem) {
+      return orderItem.orderId === orderItemId;
+    });
+
+    let delta = copyPickedItem.orderTotlaAmaunt - pickedItem.orderTotlaAmaunt
+
+    return delta
+  }
+
+
+
+
+  // ====================================================================
+  // History operations end
+
+
+
+
+  // пока не используем
+  // =====================================================================================
+  addMenuItem(menuItem) {
+    if (menuItem.text.length > 3) {
+      this.menuArray.push(menuItem)
+    } else if (menuItem.text.length < 3) {
+      return
     }
 
 
-    changeHistoryQuantityFn(orderItemId, menuItemid) {
-        // не нравится эта функция, но работает
 
-        // при клике фильтруем массив с меню и выделяем объект с заказом
+  }
 
-        const pickedItem = this.historyArray.find(function (orderItem) {
-            return orderItem.orderId === orderItemId;
-        });
+  removeMenuItem(id) {
+    this.menuArray = this.menuArray.filter(menuItem => menuItem.id !== id)
 
-        pickedItem.orderItemsArray = pickedItem.orderItemsArray.map(menuItem => menuItem.id === menuItemid ? { ...menuItem, quantity: (menuItem.quantity > 0 ? menuItem.quantity - 1 : menuItem.quantity) } : menuItem)
-        
-     
-        // меняем общую сумму заказа
-        pickedItem.orderItemsArray.forEach((item) => item.productAmount = item.quantity * item.sellPrice)
-
-        pickedItem.orderTotlaAmaunt = pickedItem.orderItemsArray.reduce((summ, item) => summ = summ + item.productAmount, 0)
-    
-
-    }
-
-    
+  }
 
 
+  changeTextFn(id, incomeText) {
 
-    // ====================================================================
-    // History operations end
+    this.menuArray = this.menuArray.map(menuItem => menuItem.id === id ? { ...menuItem, text: (incomeText.length >= 3 ? (menuItem.text = incomeText) : menuItem.text) } : menuItem)
+    // с ограничением на минимаальное кол-во символов = 3
+  }
 
-
-
-
-    // пока не используем
-    // =====================================================================================
-    addMenuItem(menuItem) {
-        if (menuItem.text.length > 3) {
-            this.menuArray.push(menuItem)
-        } else if (menuItem.text.length < 3) {
-            return
-        }
-
-       
-
-    }
-
-    removeMenuItem(id) {
-        this.menuArray = this.menuArray.filter(menuItem => menuItem.id !== id)
-
-    }
-
-
-    changeTextFn(id, incomeText) {
-
-        this.menuArray = this.menuArray.map(menuItem => menuItem.id === id ? { ...menuItem, text: (incomeText.length >= 3 ? (menuItem.text = incomeText) : menuItem.text) } : menuItem)
-        // с ограничением на минимаальное кол-во символов = 3
-    }
-
-    // пока не используем
-    // =====================================================================================
+  // пока не используем
+  // =====================================================================================
 
 
 }

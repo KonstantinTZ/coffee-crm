@@ -16,35 +16,42 @@ export function HistoryRow({ orderTime, orderNumber, orderSumm, orderArray, orde
       <tr>
         <th scope="row" >{orderTime}</th>
         <th>{orderNumber}</th>
-        <th>{orderSumm}&nbsp;у.е.</th>
+        <th>{orderArray.length ? `${orderSumm} у.е.` : '-'}</th>
         <td>
-          <div className="row">
-            {orderArray.map((item) => (
-              <HistoryItem itemName={item.productName} itemQuantity={item.quantity} key={item.id} />
+          {orderArray.length ?
+            <div className="row">
+              {orderArray.map((item) => (
 
-            ))
+                <HistoryItem itemName={item.productName} itemQuantity={item.quantity} key={item.id} />
 
-            }
-          </div>
+              ))
 
+              }
+            </div> :
+            <div className="row">
+              <span className='text-danger'>Заказ был полностью отменён</span>
+            </div>
+          }
         </td>
         <td>
+          
           <button
             className='btn btn-primary'
             onClick={() => { changeBtnHandler() }}
+            disabled = {!orderArray.length}
           >
             Изменить
           </button>
         </td>
       </tr>
-      {isModalOpend && 
-      <HistoryModal 
-      setIsModalOpend={setIsModalOpend}
-      orderNumber = {orderNumber}
-      orderArray = {orderArray}
-      orderSumm = {orderSumm}
-      orderId = {orderId}
-      />}
+      {isModalOpend &&
+        <HistoryModal
+          setIsModalOpend={setIsModalOpend}
+          orderNumber={orderNumber}
+          orderArray={orderArray}
+          orderSumm={orderSumm}
+          orderId={orderId}
+        />}
     </>
   );
 }
