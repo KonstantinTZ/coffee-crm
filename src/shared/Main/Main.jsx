@@ -9,9 +9,16 @@ import {BasketPaige} from '../BasketPaige'
 import {HistoryPage} from '../HistoryPage'
 import mainStore from '../../store/mainStore';
 
+
 export function Main() {
   useEffect(() => {
-    mainStore.copyMenuArray();
+    mainStore.copyMenuArray();  
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'mainStore') {
+        mainStore.hydrateStore()
+      }
+    });  
+    return () => window.removeEventListener('storage', (e)=>{})
     
   }, [])
   return (

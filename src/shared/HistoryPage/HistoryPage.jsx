@@ -24,7 +24,7 @@ export const HistoryPage = observer(() =>{
             {
               mainStore.historyArray.map((item)=>(
                 <HistoryRow 
-                orderTime={item.orderCreatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} 
+                orderTime={new Date (item.orderCreatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))} 
                 orderNumber={item.orderNumber} 
                 orderSumm={item.orderTotlaAmaunt}
                 orderArray = {item.orderItemsArray}

@@ -10,6 +10,7 @@ export const BasketPaige = observer(() => {
 
   function asseptBtnHandler() {
     mainStore.addToOrderArray()
+    
   }
   return (
     <>

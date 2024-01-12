@@ -2,12 +2,37 @@ import { makeAutoObservable } from 'mobx'
 import { menuPresetArray } from './menuPreset'
 import { v4 as uuidv4 } from 'uuid';
 import { ticketGenerator } from '../utils/ticketGenerator'
+import { makePersistable, hydrateStore, clearPersistedStore } from 'mobx-persist-store';
+
 
 class mainStore {
 
+
   constructor() {
     makeAutoObservable(this, {}, { deep: true })
+    // ниже из библиотеки mobx-persist-store
+    makePersistable(this, 
+      { name: 'mainStore', 
+      properties: ['basketArray', 'orderArray', 'releaseOrderArray', 'historyArray'], 
+      storage: window.localStorage 
+    });
+    //сохраняем в локал сторидж что бы а) при обновлении старницы данные не обнулялись
+    //б) была возможность синхронизации вкладок без ВЕБ сокета.
+
   }
+
+  hydrateStore() {
+    hydrateStore(this);
+    console.log('hydrateStore working');
+  }
+  // hydrateStore вызываем в main.jsx при обновлении локалстора
+  // hydrateStore обновляет наш стор
+
+  async clearStoredDate() {
+    await clearPersistedStore(this);
+  }
+  // для очистки стора из локал сториджа
+
 
   // ====================================================================
   // Menu operations start
@@ -21,7 +46,7 @@ class mainStore {
     this.menuArray.forEach(function (item) {
       item.quantity = 0
       item.prepaired = false
-      // item.id = uuidv4();
+      item.id = uuidv4();
       // во избежании ошибки дублирования id при ручном вводе.
     })
   }
@@ -130,6 +155,8 @@ class mainStore {
 
     this.orderArray.push(newOrder)
 
+
+
     this.basketArrayCleaner()
     this.copyMenuArray()
 
@@ -173,9 +200,10 @@ class mainStore {
       return orderItem.orderId === orderItemId;
     });
 
-    pickedItem.orderPrepairedAt = new Date ()
+    pickedItem.orderPrepairedAt = new Date()
 
     this.releaseOrderArray.push(pickedItem)
+
 
     this.orderArray = this.orderArray.filter(orderItem => orderItem.orderId !== orderItemId)
 
@@ -193,33 +221,15 @@ class mainStore {
   // ====================================================================
   // History operations start
 
-  historyArray = [
-    {
-      orderCreatedAt: new Date("2024-01-09T09:27:25.758Z"),
-      orderId: "24d2b8ee-14d5-475a-95f3-0d61b85ca818",
-      orderItemsArray: [{
-        category: "coffee",
-        costPrice: 500,
-        currency: "у.е.",
-        extraSettings: false,
-        id: 1,
-        imgPath: "menu-item-coffee-l",
-        measure: "мл.",
-        prepaired: true,
-        productAmount: 1600,
-        productName: "Кофе Американо L",
-        quantity: 2,
-        sellPrice: 800,
-        volume: 400,
-      }],
-      orderNumber: "L50",
-      orderPaidBy: "by card",
-      orderPrepairedAt: "",
-      orderReleasedAt: "",
-      orderTotlaAmaunt: 1600,
-      prepairedMenuItems: 1,
-    }
-  ]
+  historyArray = []
+  
+  get historyArrayCheker () {
+    
+      this.historyArray.forEach((item) => item.orderCreatedAt = new Date(item.orderCreatedAt))
+    
+    return this.historyArray
+  }
+
 
   copyHistoryArray = []
   // своеобрвзный карман
@@ -241,11 +251,14 @@ class mainStore {
       return orderItem.orderId === orderItemId;
     });
 
-    pickedItem.orderReleasedAt = new Date ()
-    delete  pickedItem.prepairedMenuItems;
+    pickedItem.orderReleasedAt = new Date()
+    delete pickedItem.prepairedMenuItems;
     this.historyArray.unshift(pickedItem);
 
+
     this.releaseOrderArray = this.releaseOrderArray.filter(orderItem => orderItem.orderId !== orderItemId);
+  
+
 
   }
 
@@ -271,6 +284,9 @@ class mainStore {
     pickedItem.orderItemsArray.forEach((item) => item.productAmount = item.quantity * item.sellPrice)
 
     pickedItem.orderTotlaAmaunt = pickedItem.orderItemsArray.reduce((summ, item) => summ = summ + item.productAmount, 0)
+
+
+ 
 
 
 
@@ -333,5 +349,10 @@ class mainStore {
 
 }
 
+
+
+
+
 /* eslint import/no-anonymous-default-export: [2, {"allowNew": true}] */
 export default new mainStore()
+

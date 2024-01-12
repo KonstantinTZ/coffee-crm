@@ -3,6 +3,7 @@ import './Header.css';
 import { NavLink } from 'react-router-dom';
 import mainStore from '../../store/mainStore';
 import { observer } from "mobx-react-lite"
+import 'animate.css';
 
 export const Header = observer(() => {
   return (
@@ -23,7 +24,7 @@ export const Header = observer(() => {
                 <NavLink className="nav-link position-relative" activeclassname={"active"} to="/kitchen">
                   Кухня&nbsp;
                     {mainStore.orderArray.length ?  
-                  <span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger">
+                  <span className={`position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger animate__animated ${mainStore.releaseOrderArray.length !== 0 ? 'animate__flash' : ''} animate__slow`}>
                     {`${mainStore.orderArray.length}`}
                     <span className="visually-hidden">Колличество заказов на кухне</span>
                   </span> : ''}
@@ -33,7 +34,7 @@ export const Header = observer(() => {
                 <NavLink className="nav-link position-relative" activeclassname={"active"} to="/release">
                   Выдача&nbsp;
                     {mainStore.releaseOrderArray.length ?  
-                  <span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger">
+                  <span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger animate__animated animate__flash animate__slow">
                     {`${mainStore.releaseOrderArray.length}`}
                     <span className="visually-hidden">Колличество заказов на выдачу</span>
                   </span> : ''}

@@ -2,8 +2,10 @@ import React from 'react';
 import './InProcessBoard.css';
 import { OrderNumber } from '../OrderNumber/OrderNumber';
 import mainStore from '../../../store/mainStore';
+import { observer } from 'mobx-react-lite';
 
-export function InProcessBoard() {
+
+export const InProcessBoard = observer(() => {
   return (
     <div className="col-6 in-procsess-container">
       <h1 className='display-4 text-danger mb-5'>В процессе</h1>
@@ -19,4 +21,4 @@ export function InProcessBoard() {
       </div>
     </div>
   );
-}
+})

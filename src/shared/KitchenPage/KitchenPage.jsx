@@ -3,6 +3,8 @@ import './KitchenPage.css';
 import { OrderRow } from '../OrderRow/OrderRow';
 import { observer } from 'mobx-react-lite';
 import mainStore from '../../store/mainStore';
+// import { useEffect } from 'react'
+// import {getJSON} from '../../utils/getJSON.js'
 
 
 export const KitchenPage = observer(() => {
