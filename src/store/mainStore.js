@@ -252,6 +252,7 @@ class mainStore {
     });
 
     pickedItem.orderReleasedAt = new Date()
+    pickedItem.orderTime = pickedItem.orderCreatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
     delete pickedItem.prepairedMenuItems;
     this.historyArray.unshift(pickedItem);
 

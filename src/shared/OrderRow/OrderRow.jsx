@@ -2,11 +2,16 @@ import React from 'react';
 import './OrderRow.css';
 import { OrderItem } from '../../shared/OrderItem'
 import mainStore from '../../store/mainStore';
+import useSound from 'use-sound';
+import ringSfx from '../../sound/ringSfx.mp3';
 
 export function OrderRow({btnMode, orderNumber, orderItemsArray, orderId, prepairedMenuItems}) {
 
+  const [play] = useSound(ringSfx)
+
   function pushToReleaseArrayHandler (orderId) {
     mainStore.addToReleaseOrderArray(orderId)
+    play()
   }
 
   function pushToHistoryArrayHandler (orderId) {
