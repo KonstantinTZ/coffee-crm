@@ -32,6 +32,7 @@ class mainStore {
     await clearPersistedStore(this);
   }
   // для очистки стора из локал сториджа
+  
 
 
   // ====================================================================
@@ -232,7 +233,7 @@ class mainStore {
 
 
   copyHistoryArray = []
-  // своеобрвзный карман
+  // своеобразный карман
 
   copyHistoryArrayFn() {
     this.copyHistoryArray = JSON.parse(JSON.stringify(this.historyArray))
@@ -259,8 +260,18 @@ class mainStore {
 
     this.releaseOrderArray = this.releaseOrderArray.filter(orderItem => orderItem.orderId !== orderItemId);
   
+  }
 
+  addAllToHistoryArray() {
+    this.releaseOrderArray.forEach((item)=>(
+      item.orderTime = item.orderCreatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    ));
 
+    this.releaseOrderArray.forEach((item)=>(
+      this.historyArray.unshift(item)))
+      // TODO добавить дату к каждому элементу
+
+      this.releaseOrderArray.splice(0, this.releaseOrderArray.length);
   }
 
 
@@ -310,7 +321,34 @@ class mainStore {
     return delta
   }
 
+  exportArray = []
 
+
+  get exportData() {
+    let newExportObj = {}
+    for (let item of this.historyArray) {
+      newExportObj.order_date = new Date(item.orderCreatedAt).toLocaleDateString()
+      newExportObj.order_creating_time = item.orderTime;
+      newExportObj.order_prepairing_time = new Date(item.orderPrepairedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      newExportObj.order_number = item.orderNumber;
+      newExportObj.order_summ = item.orderTotlaAmaunt;
+      newExportObj.order_payment_method = item.orderPaidBy;
+
+      // newExportObj.order_items = JSON.stringify(item.orderItemsArray.filter((item) => item.productName))
+      this.exportArray.push(newExportObj)
+    }
+    return this.exportArray
+  }
+
+  historyArrayCleaner() {
+    this.historyArray.splice(0, this.basketArray.length);
+    this.copyHistoryArray.splice(0, this.basketArray.length);
+    this.paymentMethodVar = ''
+  }
+
+
+
+  
 
 
   // ====================================================================

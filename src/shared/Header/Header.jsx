@@ -11,7 +11,7 @@ export const Header = observer(() => {
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient pt-3 pb-3">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#1">Кофейня 1</a>
+          <a className="navbar-brand" href="#1">XPresso</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -24,7 +24,7 @@ export const Header = observer(() => {
                 <NavLink className="nav-link position-relative" activeclassname={"active"} to="/kitchen">
                   Кухня&nbsp;
                     {mainStore.orderArray.length ?  
-                  <span className={`position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger animate__animated ${mainStore.releaseOrderArray.length !== 0 ? 'animate__flash' : ''} animate__slow`}>
+                  <span className={`position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger animate__animated animate__flash animate__slow`}>
                     {`${mainStore.orderArray.length}`}
                     <span className="visually-hidden">Колличество заказов на кухне</span>
                   </span> : ''}
@@ -47,7 +47,7 @@ export const Header = observer(() => {
                 <NavLink className="nav-link" activeclassname={"active"} to="/history">История</NavLink>
               </li>
             </ul>
-            <form className="d-flex">
+            <form className="d-flex align-items-center justify-content-center">
               <NavLink className="btn btn-success bg-gradient" activeclassname={"active"} to="/basket">
                 Заказ&nbsp;
                 {mainStore.basketArray.length ? <span className="badge bg-danger">{`${mainStore.totalOrderQuantity}`}</span> : ''}

@@ -12,17 +12,17 @@ export const KitchenPage = observer(() => {
     <>
       {mainStore.orderArray.length ?
     <div className='container'>
-      <div className="table-head row text-bg-light p-3">
-        <div className="col-1">
-          № Заказа
-        </div>
-        <div className="col-10">
-          Позиции заказа
-        </div>
-        <div className="col-1">
-          Действие
-        </div>
-      </div>
+      <div className="table-head row text-bg-light p-3 d-none d-lg-flex">
+            <div className="col-1">
+              <b>Номер</b>
+            </div>
+            <div className="col-10">
+              <b>Позиции</b>
+            </div>
+            <div className="col-1">
+              <b>Действие</b>
+            </div>
+          </div>
       {
         mainStore.orderArray.map((item) => (
           <OrderRow 

@@ -26,6 +26,7 @@ export const HistoryModal = observer(({ setIsModalOpend, orderNumber, orderArray
             <div className="container">
 
               <div className="row mb-5">
+              {orderArray.length ?
                 <table className="table table-striped table-sm ">
                   <thead className="table-warning">
                     <tr>
@@ -62,9 +63,14 @@ export const HistoryModal = observer(({ setIsModalOpend, orderNumber, orderArray
                     </tr>
                   </tbody>
                 </table>
+                :
+                <h3 className='text-secondary'>
+                  Все позиции заказа удалены
+                </h3>
+              }
               </div>
               <div className="row mb-5">
-                <h2>Возврат клиенту: <b className='text-danger'>{mainStore.historyChangeCounter(orderId)}</b> у.е. </h2>
+                <h3>Возврат клиенту: <b className='text-danger'>{mainStore.historyChangeCounter(orderId)}</b> у.е. </h3>
               </div>
             </div>
           </div>

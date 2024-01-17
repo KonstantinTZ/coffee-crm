@@ -23,7 +23,7 @@ export const BasketPaige = observer(() => {
             </h1>
           </div>
           <div className="row mb-5">
-            <table className="table table-striped align-middle">
+            <table className="table table-striped align-middle table-sm" >
               <thead className="table-warning">
                 <tr>
                   <th scope="col">#</th>

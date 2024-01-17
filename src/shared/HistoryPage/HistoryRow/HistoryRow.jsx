@@ -19,7 +19,7 @@ export function HistoryRow({ orderTime, orderNumber, orderSumm, orderArray, orde
         <th>{orderArray.length ? `${orderSumm} у.е.` : '-'}</th>
         <td>
           {orderArray.length ?
-            <div className="row">
+            <div className="row justify-content-center">
               {orderArray.map((item) => (
 
                 <HistoryItem itemName={item.productName} itemQuantity={item.quantity} key={item.id} />

@@ -21,7 +21,7 @@ export const MenuItem = observer(({id, imgPath, productName, sellPrice, currency
 
   return (
 
-    <div className="col-xl-3 col-lg-4 col-md-6 col-12  mb-3">
+    <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12  mb-3">
       <div className={`card h-100 ${quantity !==0 ? 'card-picked' : ''}`} >
         <img 
         src={imgPath ? require(`../../../../src/img/${imgPath}.png`) : require(`../../../../src/img/no-image-plug.png`)} 
@@ -37,7 +37,7 @@ export const MenuItem = observer(({id, imgPath, productName, sellPrice, currency
           <div className="d-flex justify-content-center card-footer">
             <div className="counter-container d-flex align-items-center">
               <button className="btn btn-primary counter-btn-decrease" onClick={()=>decreseBtnHandler (id)}> - </button>
-              <span className="counter-display"><b>{quantity}</b></span>
+              <span className="counter-display"><b>{quantity}&nbsp;шт.</b></span>
               <button className="btn btn-primary counter-btn-increase" onClick={()=>increseBtnHandler(id)}> + </button>
             </div>
           </div>

@@ -6,7 +6,7 @@ import mainStore from '../../store/mainStore';
 
 
 
-export const OrderItem = observer(({prepaired, name, volume, quantity, menuItemid, orderId,btnMode}) => {
+export const OrderItem = observer(({prepaired, name, volume, quantity,measure, menuItemid, orderId,btnMode}) => {
   
 
   function handlePrepairedClick () {
@@ -22,7 +22,7 @@ export const OrderItem = observer(({prepaired, name, volume, quantity, menuItemi
       >
         <div className="card-body">
           <h5 className="card-title text-start">{name}</h5>
-          <h6 className="card-subtitle mb-2 text-body-secondary text-start">Объем: {volume} мл.</h6>
+          <h6 className="card-subtitle mb-2 text-body-secondary text-start">Объем: {volume}&nbsp;{measure}</h6>
           <h6 className="card-subtitle mb-2 text-body-secondary text-start">Количество: <b className='text-danger'>{quantity}</b> шт.</h6>
         </div>
       </div>

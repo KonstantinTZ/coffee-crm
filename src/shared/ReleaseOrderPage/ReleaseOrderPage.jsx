@@ -12,15 +12,22 @@ export const ReleaseOrderPage = observer(() => {
     <>
       {mainStore.releaseOrderArray.length ?
         <div className='container'>
-          <div className="table-head row text-bg-light p-3">
+          <div className="row justify-content-end">
+            <button className='btn btn-success col-6 col-lg-3 mb-3'
+              onClick={() => (mainStore.addAllToHistoryArray())}
+            >
+              Выдать все заказы
+            </button>
+          </div>
+          <div className="table-head row text-bg-light p-3 d-none d-lg-flex">
             <div className="col-1">
-              № Заказа
+              <b>Номер</b>
             </div>
             <div className="col-10">
-              Позиции заказа
+              <b>Позиции</b>
             </div>
             <div className="col-1">
-              Действие
+              <b>Действие</b>
             </div>
           </div>
 
