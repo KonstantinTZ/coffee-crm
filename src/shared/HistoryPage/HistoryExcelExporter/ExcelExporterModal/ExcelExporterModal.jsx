@@ -16,7 +16,6 @@ export function ExcelExporterModal({setIsModalOpend}) {
 
     XLSX.utils.book_append_sheet(workBook, workSheet, 'Sheet#1')
     XLSX.writeFile(workBook, `report_${toDayLocale}.xlsx`)
-    mainStore.clearStoredDate()
     mainStore.historyArrayCleaner();
   }
 
