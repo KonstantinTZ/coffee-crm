@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/coffee-crm/static/css/main.f55f9b81.css",
+    "main.js": "/coffee-crm/static/js/main.f24a887b.js",
+    "static/js/845.961add1a.chunk.js": "/coffee-crm/static/js/845.961add1a.chunk.js",
+    "static/js/787.c5e2ca78.chunk.js": "/coffee-crm/static/js/787.c5e2ca78.chunk.js",
+    "static/media/menu-item-salad-cezar.png": "/coffee-crm/static/media/menu-item-salad-cezar.158ba99aaaf3e8a63e02.png",
+    "static/media/menu-item-salad-greek.png": "/coffee-crm/static/media/menu-item-salad-greek.244f607a8fdc9a7a1f45.png",
+    "static/media/menu-item-salad-tomato.png": "/coffee-crm/static/media/menu-item-salad-tomato.000bbc98571814942c57.png",
+    "static/media/menu-item-salad-tabule.png": "/coffee-crm/static/media/menu-item-salad-tabule.6a1bb041b656a372759c.png",
+    "static/media/menu-item-pie.png": "/coffee-crm/static/media/menu-item-pie.6e8e25badec5b76f45ea.png",
+    "static/media/ringSfx.mp3": "/coffee-crm/static/media/ringSfx.f8355257a3f5429fad08.mp3",
+    "static/media/menu-item-chocolate-1.png": "/coffee-crm/static/media/menu-item-chocolate-1.3325528374495e78d01a.png",
+    "static/media/menu-item-chocolate-3.png": "/coffee-crm/static/media/menu-item-chocolate-3.51d9dee572dada223c18.png",
+    "static/media/menu-item-chocolate-2.png": "/coffee-crm/static/media/menu-item-chocolate-2.0e65ec9b0edba55cf246.png",
+    "index.html": "/coffee-crm/index.html",
+    "main.f55f9b81.css.map": "/coffee-crm/static/css/main.f55f9b81.css.map",
+    "main.f24a887b.js.map": "/coffee-crm/static/js/main.f24a887b.js.map",
+    "845.961add1a.chunk.js.map": "/coffee-crm/static/js/845.961add1a.chunk.js.map",
+    "787.c5e2ca78.chunk.js.map": "/coffee-crm/static/js/787.c5e2ca78.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f55f9b81.css",
+    "static/js/main.f24a887b.js"
+  ]
+}
