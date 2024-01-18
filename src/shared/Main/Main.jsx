@@ -27,11 +27,11 @@ export function Main() {
       <Routes>
         <Route path="*" element={<MenuPage />} />
         {/* path="*" - если ничего не задано или задано неправильно */}
-        <Route path="kitchen" element={<KitchenPage />} />
-        <Route path="release" element={<ReleaseOrderPage />} />
-        <Route path="order-board" element={<OrderBoardPage/>} />
-        <Route path="basket" element={<BasketPaige/>} />
-        <Route path="history" element={<HistoryPage/>} />
+        <Route path="/kitchen" element={<KitchenPage />} />
+        <Route path="/release" element={<ReleaseOrderPage />} />
+        <Route path="/order-board" element={<OrderBoardPage/>} />
+        <Route path="/basket" element={<BasketPaige/>} />
+        <Route path="/history" element={<HistoryPage/>} />
       </Routes>
     
     </div>
