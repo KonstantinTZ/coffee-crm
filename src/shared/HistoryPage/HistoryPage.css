@@ -1,0 +1,13 @@
+.search-control {
+    position: relative;
+}
+
+.btn-search-clean {
+    position: absolute;
+    right: 1rem;
+    top: 30%;
+}
+
+.table-warning.history-table-head {
+    top:71px;
+}

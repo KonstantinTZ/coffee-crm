@@ -1,0 +1,12 @@
+.counter-container{
+    gap: 20px
+}
+
+.btn-container{
+    margin-top: auto;
+}
+
+.card.card-picked {
+    color: #664d03;
+    background-color: #fff3cd;
+}

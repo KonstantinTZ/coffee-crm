@@ -1,0 +1,13 @@
+
+.navbar-nav {
+    gap: 30px
+}
+
+.navbar.navbar-toggler.collapsed{
+    position: relative;
+    z-index: 1200!important;
+}
+
+.navbar.navbar-collapse.navbar-nav{
+    z-index: 1200!important;
+}
