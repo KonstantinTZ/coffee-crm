@@ -79,7 +79,7 @@ export const BasketPaige = observer(() => {
                 autoComplete="off"
                 onClick={() => { mainStore.updateOrderByPaymentMethod('by card') }}
               />
-              <label className="btn btn-outline-primary pay-type-button" htmlFor="btnradio2">Оплата катрой</label>
+              <label className="btn btn-outline-primary pay-type-button" htmlFor="btnradio2">Оплата картой</label>
 
               <input
                 type="radio"
