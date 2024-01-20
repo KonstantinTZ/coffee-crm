@@ -1,3 +1,11 @@
 .in-procsess-container{
     background-color: rgba(220, 53, 69, 0.1);
+    position: relative;
+}
+
+.btm-menu-open {
+    position:absolute;
+    top:20px;
+    left:7px;
+    opacity: 0.1;
 }

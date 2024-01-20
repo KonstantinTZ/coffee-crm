@@ -2,7 +2,7 @@ export const menuPresetArray = [
     {
         id: 1,
         category: 'drinks',
-        productName: 'Черный кофе',
+        productName: 'Чёрный кофе',
         volume: 200,
         measure: 'мл.',
         currency: 'у.е.',
@@ -14,7 +14,7 @@ export const menuPresetArray = [
     {
         id: 2,
         category: 'drinks',
-        productName: 'Эсперссо',
+        productName: 'Эспрессо',
         volume: 200,
         measure: 'мл.',
         currency: 'у.е.',

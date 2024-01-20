@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { menuPresetArray } from './menuPreset'
 import { v4 as uuidv4 } from 'uuid';
 import { ticketGenerator } from '../utils/ticketGenerator'
-import { makePersistable, hydrateStore, clearPersistedStore} from 'mobx-persist-store';
+import { makePersistable, hydrateStore, clearPersistedStore } from 'mobx-persist-store';
 
 
 class mainStore {
@@ -299,11 +299,23 @@ class mainStore {
   historyArrayCleaner() {
     this.historyArray.splice(0, this.historyArray.length);
     this.copyHistoryArray.splice(0, this.historyArray.length);
-  
+
   }
 
   // ====================================================================
   // History operations end
+
+
+  // ====================================================================
+  // Navigation opener operations end
+
+  isNavigationOpen = true
+
+  // ====================================================================
+  // Navigation opener operations end
+
+
+
 }
 
 

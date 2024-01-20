@@ -7,6 +7,8 @@ import 'animate.css';
 
 export const Header = observer(() => {
   return (
+    <>
+    { mainStore.isNavigationOpen &&
     <div className="header container sticky-top">
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient pt-3 pb-3">
@@ -58,5 +60,7 @@ export const Header = observer(() => {
       </nav>
 
     </div>
+  }
+  </>
   );
 })
