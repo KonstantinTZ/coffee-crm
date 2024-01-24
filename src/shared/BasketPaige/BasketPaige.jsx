@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './BasketPaige.css';
 import { BasketRow } from './BasketRow/BasketRow';
 import { observer } from "mobx-react-lite"
@@ -12,6 +12,12 @@ export const BasketPaige = observer(() => {
     mainStore.addToOrderArray()
     
   }
+  
+  useEffect(() => {
+    
+    return () => {mainStore.updateOrderByPaymentMethod('')};
+  },[]);
+
   return (
     <>
       {mainStore.basketArray.length ?
