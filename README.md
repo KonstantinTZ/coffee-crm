@@ -1,103 +1,150 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-<></>
-
 <h1>
-    Система управления кофейней
+    Система управления кофейней (или небольшим кафе) "XPresso".
 </h1>
 
-<hr/>
+<hr>
 
 <p>
-    Данное приложение служит для того что бы помочь управляющим кофейями настроить и оптимизировать бизнес процессы.
+    Данное приложение служит для того, что бы помочь управляющим кофейями настроить и оптимизировать бизнес процессы.
 </p>
+
+<h2>Конкурентные приимущества</h2>
+
+<ul>
+    <li>
+        Простота эксплуатации.
+    </li>
+    <li>
+        Не требует специализированного торгового оборудования.
+    </li>
+    <li>
+        Работает внутри браузера, не требует сервера.
+    </li>
+</ul>
 
 
 <p>
     При помощи данного приложения можно:
 </p>
+
 <ul>
     <li>
-        Ускорить работу кассира
+        Ускорить работу кассира.
     </li>
     <li>
-        Разделить выполнение заказов между бариста
+        Разделить выполнение заказов между бариста и поворами.
     </li>
     <li>
-        Проверять заказы при выдаче
+        Проверять коплектность выдаваемых позиций.
     </li>
     <li>
-        Организовать электронную очередь
+        Организовать электронную очередь.
     </li>
+</ul>
+
+<hr>
+
+<h3>Как пользоваться приложением?</h3>
+
+<p>Для полноценной работы с приложением вам потребуется несколько мониторов.</p>
+<p>Возможно, Вам может потребоватся программа для расширения рабочего стола на мобильные устройства с сенсорным экраном. Например:<a href="https://www.spacedesk.net/">SpaceDesk</a> или подобные ей.</p>
+
+<ul>
+  <li>
+    Открыть главную страницу приложения по <a href='https://konstantintz.github.io/coffee-crm/'>ссылке.</a>
+  </li>
+  <li>
+    Открыть элементы навигации: "Кухня", "Выдача", "Табло" в разных <b>окнах</b>.
+  </li>
+  <li>
+    Открыть элементы навигации: "Кухня", "Выдача", "Табло" в разных <b>окнах</b> браузера и разместить их на соответствующих экранах.
+  </li>
+  <li>
+    Перевести все открытые вкладки в полноэкранный режим при помощи клавиши на клавиатуре "F11".
+  </li>
+</ul>
+
+<h3>Дополнительные разъясниения по настройке приложения</h3>
+
+<ul>
+  <li>
+    Элементы навигации: "Кухня"  желательно расположить на сенсорном экране и в зоне приготовления заказов.
+  </li>
+  <li>
+    Элементы навигации: "Табло" расположить на экране в зоне видимости гостей Вашего заведения. (Элементы навигации можно скрыть и открыть по нажатию кнопки "Закрыть/Открыть навигацию" находящуюся слева от красной надписи "В процессе")
+  </li>
+  <li>
+    Элементами навигации: "Меню", "Заказ","Выдача" и "История" может управлять один оператор.
+  </li>
 
 </ul>
+
+<p>
+  <b>Важные оговорки.</b> В демонстрационных целях позиции меню и цены указаны в вымышленной валюте "у.е.". Позициию меню преднастраиваются один раз перед использованием приложения в специальном файле.
+</p>
+
+<hr>
+
+<h3>Алгоритм работы с приложением</h3>
+
+<ul>
+  <li>
+    На странице "Меню" оператор добавляет соответствующие позиции озвученные гостем в нужном колличестве (до 10 шт. на одну позицию).
+  </li>
+  <li>
+    Далее позиции отображаются на странице "Заказ" в виде таблицы и могут быть скорректированны оператором, выбирается форма оплаты, гостю озвучивается сумма "К оплате", производятся взаиморасчеты. Оператором вручную выбивается чек на POS терминале.
+  </li>
+  <li>
+    <b>После</b> завершения взаиморасчётов нажимается кнопка "Завершить оплату", Высвечивается надпись "Сообщите номер заказа клиенту:M22(например)". Данное сообщение будет доступно на странице "Заказ" до добавления новой позиции в заказ из страницы "Меню"
+    Номер заказа отображается на странице "Табло" в графе "В процессе"
+  </li>
+  <li>
+    Далее заказ попадает на страницу "Кухня", где оператор отвечающий за приготовление заказа, нажимает на саму позицию по её готовности, при этом карточка позиции становится зелёной. По готовности всех позиций заказа активируется красная кнопка "Готов".
+    По нажатии кнопки "Готов", раздаётся звуковой сигнал, позиция переводится на страницу "Выдача", а на стринице "Табло" номер заказа перемещается в графу "Готов".
+  </li>
+  <li>
+    Далее оператор отвечающий за выдачу на странице "Выдача" сверяет позиции предоставленные поваром с отображаемыми на эране, при различии сообщает повару и доукомлектовывает заказ. При отсутствии различий выдает соответствующий заказ гостю. При нажатии зелёной кнопки "Выдан" заказ пропадает из страницы "Табло", графы "Готов" и попадает на страницу "История". При поточной выдаче заказов, по окончании выдачи оператор может нажать зелёную кнопку "Выдать все заказы" в левом углу страницы "Выдача" и так же убрать все заказы со страницы "Табло", графы "Готов" и перевести их на страницу "История".
+  </li>
+  <li>
+    На странице "История" заказ может быть скорректирован в меньшую сторону. При нажатии синей кнопки "Изменить" отображается всплывающее окно с поизициями заказа и возможностью уменьшить их колличество. При этом в графе "Возврат клиенту" отображается сумма к возврату. По завершению взаиморасчетов с клиентом нажимается кнопка "Сохранить изменения". Для отмены нажимается кнопка "Отмена" или "Х". Дополнительно для поиска заказа можно воспользоваться строкой поиска в верхней части страницы "История". Поиск производится по номеру заказа(можно ввести не более 3х символов, регистр <strong>НЕ</strong> важен).
+  </li>
+  <li>
+    По завершении рабочей смены оператор нажимает жёлтую кнопку "Закрыть смену" на странице "История". Отображается всплвывющее окно с предупреждением. Далее по нажатии кнопки "Экспорт в Excel" производится экспорт истории заказов в файл с расширением ".xlsx" и сохраняется на жёсткий диск компьютера, при этом история заказов очищается. Для отмены нажимается кнопка "Отмена" или "Х".
+  </li>
+</ul>
+
+<hr>
+
+<h3>Стек технологий использованный при разработке данного приложения</h3>
+
+<ul>
+  <li>
+   Библиотека React.
+  </li>
+  <li>
+   Библиотека Bootstrap.
+  </li>
+  <li>
+   Стейт менеджер MobX.
+  </li>
+  <li>
+   Библиотека React Router.
+  </li>
+  <li>
+   Для синхронизации работы в разных вкладках браузера использована библиотека mobx-persist-store.
+  </li>
+</ul>
+
+<hr>
+
+<h3>Планы развитя приложения</h3>
+
+<ul>
+  <li>
+   Добавления функционала печати номерков и списка заказанных позиций на термопринтере.
+  </li>
+  <li>
+   Добавления функционала передачи информации о заказе на POS терминал.
+  </li>
+</ul>
+
