@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/coffee-crm/static/css/main.4833f1eb.css",
-    "main.js": "/coffee-crm/static/js/main.c20dd7b7.js",
+    "main.js": "/coffee-crm/static/js/main.5834c0d6.js",
     "static/js/845.961add1a.chunk.js": "/coffee-crm/static/js/845.961add1a.chunk.js",
     "static/js/787.c5e2ca78.chunk.js": "/coffee-crm/static/js/787.c5e2ca78.chunk.js",
     "static/media/menu-item-salad-cezar.png": "/coffee-crm/static/media/menu-item-salad-cezar.158ba99aaaf3e8a63e02.png",
@@ -15,12 +15,12 @@
     "static/media/menu-item-chocolate-2.png": "/coffee-crm/static/media/menu-item-chocolate-2.0e65ec9b0edba55cf246.png",
     "index.html": "/coffee-crm/index.html",
     "main.4833f1eb.css.map": "/coffee-crm/static/css/main.4833f1eb.css.map",
-    "main.c20dd7b7.js.map": "/coffee-crm/static/js/main.c20dd7b7.js.map",
+    "main.5834c0d6.js.map": "/coffee-crm/static/js/main.5834c0d6.js.map",
     "845.961add1a.chunk.js.map": "/coffee-crm/static/js/845.961add1a.chunk.js.map",
     "787.c5e2ca78.chunk.js.map": "/coffee-crm/static/js/787.c5e2ca78.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4833f1eb.css",
-    "static/js/main.c20dd7b7.js"
+    "static/js/main.5834c0d6.js"
   ]
 }
