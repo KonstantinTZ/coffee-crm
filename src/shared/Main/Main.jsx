@@ -7,7 +7,10 @@ import { KitchenPage } from '../KitchenPage/KitchenPage';
 import {ReleaseOrderPage} from '../ReleaseOrderPage'
 import {BasketPaige} from '../BasketPaige'
 import {HistoryPage} from '../HistoryPage'
+import {LoginPage} from '../LoginPage'
 import mainStore from '../../store/mainStore';
+
+import { KITCHEN_ROUTE } from '../../utils/consts';
 
 
 export function Main() {
@@ -25,13 +28,14 @@ export function Main() {
     <div className="main container pt-3 pb-3">
       
       <Routes>
-        <Route path="*" element={<MenuPage />} />
+        <Route path="/menu" element={<MenuPage />} />
         {/* path="*" - если ничего не задано или задано неправильно */}
         <Route path="/kitchen" element={<KitchenPage />} />
         <Route path="/release" element={<ReleaseOrderPage />} />
         <Route path="/order-board" element={<OrderBoardPage/>} />
         <Route path="/basket" element={<BasketPaige/>} />
         <Route path="/history" element={<HistoryPage/>} />
+        <Route path="/login" element={<LoginPage/>} />
       </Routes>
     
     </div>

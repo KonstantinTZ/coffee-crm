@@ -1,5 +1,6 @@
 
 import './App.css';
+import AppRouter from './shared/AppRouter'
 import { Header } from './shared/Header/Header';
 import { Main } from './shared/Main';
 
@@ -8,7 +9,8 @@ function App() {
     <div className="App">
       <>
       <Header/>
-      <Main/>
+      {/* <Main/> */}
+      <AppRouter/>
       </>
     </div>
   );
