@@ -1,4 +1,4 @@
-import { MENU_ROUTE, LOGIN_ROUTE,KITCHEN_ROUTE,RELEASE_ROUTE,ORDERBOARD_ROUTE,BASKET_ROUTE,HISTORY_ROUTE } from "./consts.js"
+import { MENU_ROUTE, LOGIN_ROUTE,KITCHEN_ROUTE,RELEASE_ROUTE,ORDERBOARD_ROUTE,BASKET_ROUTE,HISTORY_ROUTE, SETTINGS_ROUTE } from "./consts.js"
 import { LoginPage } from "../shared/LoginPage"
 import { MenuPage } from "../shared/MenuPage/MenuPage.jsx"
 import { KitchenPage } from "../shared/KitchenPage/KitchenPage.jsx"
@@ -6,6 +6,7 @@ import { ReleaseOrderPage } from "../shared/ReleaseOrderPage/ReleaseOrderPage.js
 import { OrderBoardPage } from "../shared/OrderBoardPage/OrderBoardPage.jsx"
 import { BasketPaige } from "../shared/BasketPaige/BasketPaige.jsx"
 import { HistoryPage } from "../shared/HistoryPage/HistoryPage.jsx"
+import { SettingsPage } from "../shared/SettingsPage/SettingsPage.jsx"
 
 
 export const publicRoutes = [
@@ -39,6 +40,10 @@ export const privateRoutes = [
     {
         path: HISTORY_ROUTE,
         Component: <HistoryPage />
+    },
+    {
+        path: SETTINGS_ROUTE,
+        Component: <SettingsPage />
     }
 ]
 

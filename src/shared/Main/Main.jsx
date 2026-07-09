@@ -10,8 +10,7 @@ import {HistoryPage} from '../HistoryPage'
 import {LoginPage} from '../LoginPage'
 import mainStore from '../../store/mainStore';
 
-import { KITCHEN_ROUTE } from '../../utils/consts';
-
+// Компонент не используется. Перенесено в AppRouter
 
 export function Main() {
   useEffect(() => {
