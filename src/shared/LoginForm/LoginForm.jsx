@@ -61,7 +61,7 @@ export const LoginForm = observer(() => {
           ''}
           </div>
       </button>
-      <div id="emailHelp" class="form-text text-danger">{errMsg ? errMsg : " " }</div>
+      <div id="emailHelp" className="form-text text-danger">{errMsg ? errMsg : " " }</div>
     </form>
   )
 })
