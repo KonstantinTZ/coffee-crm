@@ -13,8 +13,18 @@ export const AddCategoryModal = observer(({ setIsModalOpend, modalMode, category
 
   useEffect(() => {
     if (categoryId) {
-      setCategory(menuStore.getCategoryById(categoryId))
-      console.log('categoryId->', categoryId)
+      const foundCategory = menuStore.getCategoryById(categoryId)
+      console.log('categoryId->',categoryId)
+
+      if (foundCategory) {
+        // Безопасно копируем свойства найденной категории
+        setCategory({
+          value: foundCategory.value || '',
+          label: foundCategory.label || ''
+        })
+      } else {
+        console.warn(`Категория с ID ${categoryId} не найдена в menuStore`)
+      }
     }
   }, [])
 
@@ -33,7 +43,7 @@ export const AddCategoryModal = observer(({ setIsModalOpend, modalMode, category
 
 
   function saveCategoryHandler() {
-    menuStore.addCategory(category)
+    menuStore.addCategory(category.label)
     setIsModalOpend(false)
   }
   function changeCategoryHandler() {
@@ -74,18 +84,18 @@ export const AddCategoryModal = observer(({ setIsModalOpend, modalMode, category
               </div>
             </div>
           </div>
-          
-            {modalMode === 'changeCategory' ?
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { cancelBtnHandle() }}>Отмена</button>
-                <button type="button" className="btn btn-success" onClick={changeCategoryHandler}>Сохранить изменения</button>
-                <button type="button" className="btn btn-danger" onClick={removeCategoryHandler}>Удалить категорию</button>
-              </div>
-              :
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { cancelBtnHandle() }}>Отмена</button>
-                <button type="button" className="btn btn-primary" onClick={saveCategoryHandler}>Сохранить изменения</button>
-              </div>
+
+          {modalMode === 'changeCategory' ?
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { cancelBtnHandle() }}>Отмена</button>
+              <button type="button" className="btn btn-success" onClick={changeCategoryHandler}>Сохранить изменения</button>
+              <button type="button" className="btn btn-danger" onClick={removeCategoryHandler}>Удалить категорию</button>
+            </div>
+            :
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { cancelBtnHandle() }}>Отмена</button>
+              <button type="button" className="btn btn-primary" onClick={saveCategoryHandler}>Сохранить изменения</button>
+            </div>
           }
         </div>
 
