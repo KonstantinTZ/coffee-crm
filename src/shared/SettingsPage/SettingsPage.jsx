@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite"
 import { useStores } from '../../store/rootStore'
 import { AddItemModal } from '../AddItemModal/AddItemModal'
 import { AddCategoryModal } from '../AddCategoryModal/AddCategoryModal'
-import { MenuItem } from '../MenuPage/MenuItem/MenuItem'
+import { Loader } from '../Loader/Loader'
 
 import { menuStore } from '../../store/menuStore'
 
@@ -51,9 +51,9 @@ export const SettingsPage = observer(() => {
     setModalMode('changeCategory')
   }
 
-  if (menuStore.isLoading) {
-    return <div>Загрузка...</div>
-  }
+  // if (menuStore.isLoading) {
+  //   return <div>Загрузка...</div>
+  // }
 
   return (
     <div className="main container pt-3 pb-3">
@@ -97,7 +97,6 @@ export const SettingsPage = observer(() => {
       </div>
 
       {
-
         menuStore.categoriesForSelect.length > 0
           ?
           <>
@@ -116,7 +115,7 @@ export const SettingsPage = observer(() => {
             </div>
 
             <div className="row row-cols-auto">
-              {/* кнопка добавить пункт */}
+              {/* кнопка добавить пункт/загрузка пунктов */}
               {menuStore.getItemsByCategoryId(filter).map((item) => (
                 <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12  mb-3">
                   <div className={`card h-100 `} onClick={() => { changeItemBtnHandler(item.id) }}>
@@ -167,6 +166,7 @@ export const SettingsPage = observer(() => {
           categoryId={filter}
         />
       }
+      <Loader isLoading={menuStore.isLoading}/>
     </div>
   )
 })
