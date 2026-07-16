@@ -1,24 +1,26 @@
-import React from 'react';
+import {React} from 'react';
 import './MenuItem.css';
 import { observer } from "mobx-react-lite"
-import  mainStore  from '../../../store/mainStore';
+import { basketStore } from '../../../store/basketStore';
 
 
-export const MenuItem = observer(({id, imgPath, productName, sellPrice, currency, volume, measure, quantity})=> {
+export const MenuItem = observer(({id, imgPath, productName, sellPrice, currency, volume, measure})=> {
 
-  function increseBtnHandler (id) {
-    mainStore.changeQuantityFn(id, true);
-    mainStore.addToBasketFn(id)
+  // не используем useState, т.к. контролируем через mobx
+  const quantity = basketStore.getItemQuantity(id);
 
+  function increseBtnHandler () {
+    if (quantity < 10) {
+      basketStore.addToBasket(id, quantity + 1);
+    }
   }
 
-  function decreseBtnHandler (id) {
-    mainStore.changeQuantityFn(id, false);
-    mainStore.addToBasketFn(id)
+  function decreseBtnHandler () {
+    if (quantity > 0) {
+      basketStore.updateQuantity(id, quantity - 1); 
+    }  
   }
-
-
-
+  
   return (
 
     <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12  mb-3">
@@ -36,17 +38,12 @@ export const MenuItem = observer(({id, imgPath, productName, sellPrice, currency
         </div>
           <div className="d-flex justify-content-center card-footer">
             <div className="counter-container d-flex align-items-center">
-              <button className="btn btn-primary counter-btn-decrease" onClick={()=>decreseBtnHandler (id)}> - </button>
+              <button className="btn btn-primary counter-btn-decrease" onClick={decreseBtnHandler}> - </button>
               <span className="counter-display"><b>{quantity}&nbsp;шт.</b></span>
-              <button className="btn btn-primary counter-btn-increase" onClick={()=>increseBtnHandler(id)}> + </button>
+              <button className="btn btn-primary counter-btn-increase" onClick={increseBtnHandler}> + </button>
             </div>
           </div>
       </div>
     </div>
-
-
-
-
-
   );
 })

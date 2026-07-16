@@ -7,6 +7,7 @@ import { AddCategoryModal } from '../AddCategoryModal/AddCategoryModal'
 import { Loader } from '../Loader/Loader'
 
 import { menuStore } from '../../store/menuStore'
+import { basketStore } from '../../store/basketStore'
 
 export const SettingsPage = observer(() => {
   // todo отказаться от useStores
@@ -28,17 +29,18 @@ export const SettingsPage = observer(() => {
     }
   }, [menuStore.categoriesForSelect, filter])
 
+  function logOutBtnHandler () {
+    auth.logout()
+    basketStore.clearBasket()
+  }
+
   function addItemBtnHandler() {
     setIsItemModalOpend(true)
     setItemId(null)
-    // todo убрать ?
-    // setModalMode('addItem')
   }
   function changeItemBtnHandler(itemId) {
     setItemId(itemId)
     setIsItemModalOpend(true)
-    // todo убрать ?
-    // setModalMode('changeItem')
   }
   function addCategoryBtnHandler() {
     setIsCategoryModalOpend(true)
@@ -63,9 +65,14 @@ export const SettingsPage = observer(() => {
         <div className="col-2 "></div>
         <div className="col-2 "></div>
         <div className="col-2 "></div>
-        <div className="col-2 "></div>
+        <div className="col-2 ">
+          <p className='text-secondary'>
+            Вы авторизованы как: &nbsp;
+            {auth.user.email}
+          </p>
+        </div>
         <div className="col-2 d-flex align-items-center justify-content-end">
-          <button className="btn btn-danger pl-2" onClick={() => { auth.logout() }}>
+          <button className="btn btn-danger pl-2" onClick={logOutBtnHandler}>
             Выйти
           </button>
         </div>
@@ -166,7 +173,7 @@ export const SettingsPage = observer(() => {
           categoryId={filter}
         />
       }
-      <Loader isLoading={menuStore.isLoading}/>
+      <Loader isLoading={menuStore.isLoading} />
     </div>
   )
 })

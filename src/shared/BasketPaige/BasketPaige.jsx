@@ -1,26 +1,21 @@
-import React, { useEffect } from 'react';
-import './BasketPaige.css';
-import { BasketRow } from './BasketRow/BasketRow';
+import React, { useEffect } from 'react'
+import './BasketPaige.css'
+import { BasketRow } from './BasketRow/BasketRow'
 import { observer } from "mobx-react-lite"
-import mainStore from '../../store/mainStore';
-
-
+import { basketStore } from '../../store/basketStore'
 
 export const BasketPaige = observer(() => {
 
   function asseptBtnHandler() {
-    mainStore.addToOrderArray()
-    
+    basketStore.addToOrderArray()
   }
-  
   useEffect(() => {
-    
-    return () => {mainStore.updateOrderByPaymentMethod('')};
-  },[]);
+    return () => { basketStore.updateOrderByPaymentMethod('') }
+  }, [])
 
   return (
     <>
-      {mainStore.basketArray.length ?
+      {basketStore.basketArray.length ?
 
         <div className="container">
           <div className="row mb-4">
@@ -40,15 +35,16 @@ export const BasketPaige = observer(() => {
               </thead>
               <tbody>
 
-                {mainStore.basketArray.map((item) => (
+                {basketStore.basketArray.map((item) => (
                   <BasketRow
-                    rowNumber={mainStore.basketArray.indexOf(item) + 1}
+                    rowNumber={basketStore.basketArray.indexOf(item) + 1}
                     positionName={item.productName}
                     positionQuantity={item.quantity}
                     positionSumm={item.sellPrice * item.quantity}
-                    key={item.id}
-                    id={item.id}
-                    mode = {'basket'}
+                    positionCurrency={item.currency}
+                    key={item.menuItemId}
+                    id={item.menuItemId}
+                    mode={'basket'}
                   />
 
                 ))}
@@ -60,7 +56,8 @@ export const BasketPaige = observer(() => {
                   <th scope="row">Итого</th>
                   <td></td>
                   <td></td>
-                  <th>{mainStore.orderAmount} у.е.</th>
+                  {/* выбираем валюту первого элемента массива basketArray */}
+                  <th>{basketStore.orderAmount} {basketStore.basketArray[0].currency}</th>
                 </tr>
               </tbody>
             </table>
@@ -73,7 +70,7 @@ export const BasketPaige = observer(() => {
                 name="btnradio"
                 id="btnradio1"
                 autoComplete="off"
-                onClick={() => { mainStore.updateOrderByPaymentMethod('cash') }}
+                onClick={() => { basketStore.updateOrderByPaymentMethod('cash') }}
               />
               <label className="btn btn-outline-primary pay-type-button" htmlFor="btnradio1">Оплата наличными</label>
 
@@ -83,7 +80,7 @@ export const BasketPaige = observer(() => {
                 name="btnradio"
                 id="btnradio2"
                 autoComplete="off"
-                onClick={() => { mainStore.updateOrderByPaymentMethod('by card') }}
+                onClick={() => { basketStore.updateOrderByPaymentMethod('by card') }}
               />
               <label className="btn btn-outline-primary pay-type-button" htmlFor="btnradio2">Оплата картой</label>
 
@@ -93,14 +90,26 @@ export const BasketPaige = observer(() => {
                 name="btnradio"
                 id="btnradio3"
                 autoComplete="off"
-                onClick={() => { mainStore.updateOrderByPaymentMethod('transfer') }}
+                onClick={() => { basketStore.updateOrderByPaymentMethod('transfer') }}
               />
               <label className="btn btn-outline-primary pay-type-button" htmlFor="btnradio3">Оплата переводом</label>
+
+              <input
+                type="radio"
+                className="btn-check"
+                name="btnradio"
+                id="btnradio4"
+                autoComplete="off"
+                onClick={() => { basketStore.updateOrderByPaymentMethod('SBP') }}
+              />
+              <label className="btn btn-outline-primary pay-type-button" htmlFor="btnradio4">СБП</label>
+
             </div>
           </div>
           <div className="row mb-5">
+            {/* выбираем валюту первого элемента массива basketArray */}
             <h2 className="text-danger">
-              К оплате: {mainStore.orderAmount} у.е.
+              К оплате: {basketStore.orderAmount} {basketStore.basketArray[0].currency}
             </h2>
           </div>
           <div className="row ">
@@ -109,25 +118,25 @@ export const BasketPaige = observer(() => {
                 type="button"
                 className="btn btn-warning p-4"
                 onClick={() => { asseptBtnHandler() }}
-                disabled={!mainStore.paymentMethodVar}
+                disabled={!basketStore.paymentMethodVar}
               >Завершить оплату</button>
             </div>
           </div>
         </div>
         :
         <div className="container">
-          {!mainStore.orderArray.length ?
+          {!basketStore.orderArray.length ?
             <h2 className='text-secondary'>
               Добавьте позиции из меню
             </h2>
             :
             <h1 className='text-danger pt-5'>
-              Сообщите номер заказа клиенту : {mainStore.orderArray[mainStore.orderArray.length - 1].orderNumber}
+              Сообщите номер заказа клиенту : {basketStore.orderArray[basketStore.orderArray.length - 1].orderNumber}
             </h1>
             // вот это переделать на попап !!!! todo
           }
         </div>
       }
     </>
-  );
+  )
 })
