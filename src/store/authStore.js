@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { auth, db, googleProvider } from '../firebase/config'
+import { orderStore } from '../store/orderStore';
 
 class AuthStore {
     user = null;
@@ -34,6 +35,8 @@ class AuthStore {
                         }
                         this.loading = false
                     })
+                    // подписка на заказы
+                orderStore.subscribe(firebaseUser.uid);
                 } catch (err) {
                     runInAction(() => {
                         this.error = 'Failed to load user data'
@@ -114,6 +117,8 @@ class AuthStore {
     async logout() {
         try {
             this.loading = true
+            // отписываемся от заказов
+            orderStore.unsubscribeOrders();
             await signOut(auth)
             runInAction(() => {
                 this.user = null

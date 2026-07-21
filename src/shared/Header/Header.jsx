@@ -1,4 +1,4 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import './Header.css'
 import { NavLink } from 'react-router-dom'
 import mainStore from '../../store/mainStore'
@@ -6,10 +6,13 @@ import { basketStore } from '../../store/basketStore'
 import { observer } from "mobx-react-lite"
 import 'animate.css'
 import { useStores } from '../../store/rootStore'
+import { orderStore } from '../../store/orderStore';
+import authStore  from '../../store/authStore'
 
 export const Header = observer(() => {
   const { auth } = useStores()
   const user = auth.isAuthenticated
+
   return (
     <>
       {mainStore.isNavigationOpen &&
@@ -32,9 +35,9 @@ export const Header = observer(() => {
                         <li className="nav-item">
                           <NavLink className="nav-link position-relative" activeclassname={"active"} to="/kitchen">
                             Кухня&nbsp;
-                            {mainStore.orderArray.length ?
+                            {orderStore.kitchenOrders.length ?
                               <span className={`position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger animate__animated animate__flash animate__slow`}>
-                                {`${mainStore.orderArray.length}`}
+                                {`${orderStore.kitchenOrders.length}`}
                                 <span className="visually-hidden">Колличество заказов на кухне</span>
                               </span> : ''}
                           </NavLink>
@@ -42,9 +45,9 @@ export const Header = observer(() => {
                         <li className="nav-item">
                           <NavLink className="nav-link position-relative" activeclassname={"active"} to="/release">
                             Выдача&nbsp;
-                            {mainStore.releaseOrderArray.length ?
+                            {orderStore.releaseOrders.length ?
                               <span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger animate__animated animate__flash animate__slow">
-                                {`${mainStore.releaseOrderArray.length}`}
+                                {`${orderStore.releaseOrders.length}`}
                                 <span className="visually-hidden">Колличество заказов на выдачу</span>
                               </span> : ''}
                           </NavLink>

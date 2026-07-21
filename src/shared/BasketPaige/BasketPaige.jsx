@@ -4,11 +4,13 @@ import { BasketRow } from './BasketRow/BasketRow'
 import { observer } from "mobx-react-lite"
 import { basketStore } from '../../store/basketStore'
 
+
 export const BasketPaige = observer(() => {
 
   function asseptBtnHandler() {
-    basketStore.addToOrderArray()
+    basketStore.confirmOrder()
   }
+  
   useEffect(() => {
     return () => { basketStore.updateOrderByPaymentMethod('') }
   }, [])

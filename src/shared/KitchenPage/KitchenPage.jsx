@@ -2,15 +2,19 @@ import React from 'react'
 import './KitchenPage.css'
 import { OrderRow } from '../OrderRow/OrderRow'
 import { observer } from 'mobx-react-lite'
-import mainStore from '../../store/mainStore'
-// import { useEffect } from 'react'
-// import {getJSON} from '../../utils/getJSON.js'
+
+import { orderStore } from '../../store/orderStore';
+import authStore  from '../../store/authStore'
+import { useEffect } from 'react'
+
+import { toJS } from 'mobx'
 
 
 export const KitchenPage = observer(() => {
+
   return (
     <>
-      {mainStore.orderArray.length ?
+      {orderStore.kitchenOrders.length ?
         <div className='container'>
           <div className="table-head row text-bg-light p-3 d-none d-lg-flex">
             <div className="col-1">
@@ -24,14 +28,14 @@ export const KitchenPage = observer(() => {
             </div>
           </div>
           {
-            mainStore.orderArray.map((item) => (
+            orderStore.kitchenOrders.map((o) => (
               <OrderRow
                 btnMode={'kitchen'}
-                key={item.orderId}
-                orderNumber={item.orderNumber}
-                orderItemsArray={item.orderItemsArray}
-                orderId={item.orderId}
-                prepairedMenuItems={item.prepairedMenuItems} />
+                key={o.id}
+                orderNumber={o.orderNumber}
+                orderItemsArray={o.items}
+                orderId={o.id}
+                prepairedMenuItems={o.prepairedMenuItems} />
             ))
           }
           {/* <OrderRow btnName={'Готов'}/>

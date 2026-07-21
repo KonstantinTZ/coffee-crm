@@ -2,6 +2,8 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 import { menuStore } from '../store/menuStore'
 import { ticketGenerator } from '../utils/ticketGenerator'
+import { orderStore } from '../store/orderStore'
+import { ORDER_STATUS } from '../utils/consts'
 // todo после отладки убрать
 import { toJS } from 'mobx'
 
@@ -130,19 +132,21 @@ class BasketStore {
     }
 
     // Добавление заказа в массив заказов
-    addToOrderArray() {
+    confirmOrder() {
         if (this.basketArray.length === 0) return
 
         const newOrder = {
-            id: Date.now().toString(),
+            // id генерится сам на сервере
             orderNumber: ticketGenerator(),
             items: [...this.basketArray],
             totalAmount: this.orderAmount,
             paymentMethod: this.paymentMethodVar,
-            status: 'cooking', // new, cooking, ready, delivered
+            status: ORDER_STATUS.COOKING, // new, cooking, ready, delivered
             createdAt: new Date().toISOString(),
             completedAt: null
         }
+
+        orderStore.createOrder(newOrder)
 
         this.orderArray.push(newOrder)
         this.clearBasket()

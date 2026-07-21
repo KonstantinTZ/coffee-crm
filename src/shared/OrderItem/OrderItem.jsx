@@ -10,8 +10,8 @@ export const OrderItem = observer(({prepaired, name, volume, quantity,measure, m
   
 
   function handlePrepairedClick () {
-    if (btnMode === 'kitchen') mainStore.setOrderItemSetPrepaired(orderId, menuItemid)
-    
+    // if (btnMode === 'kitchen') mainStore.setOrderItemSetPrepaired(orderId, menuItemid)
+    console.log('handlePrepairedClick')
   }
 
   return (

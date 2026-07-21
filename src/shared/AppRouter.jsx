@@ -9,16 +9,6 @@ import { useAuthState } from "react-firebase-hooks/auth"
 
 
 const AppRouter = observer(() => {
-    useEffect(() => {
-        mainStore.copyMenuArray()
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'mainStore') {
-                mainStore.hydrateStore()
-            }
-        })
-        return () => window.removeEventListener('storage', (e) => { })
-
-    }, [])
 
     const { auth } = useStores()
     const user = auth.isAuthenticated

@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useEffect} from 'react';
 import './OrderRow.css';
 import { OrderItem } from '../../shared/OrderItem'
 
@@ -6,18 +6,22 @@ import mainStore from '../../store/mainStore';
 import useSound from 'use-sound';
 import ringSfx from '../../sound/ringSfx.mp3';
 
-export function OrderRow({btnMode, orderNumber, orderItemsArray, orderId, prepairedMenuItems}) {
+import { orderStore } from '../../store/orderStore';
+import authStore  from '../../store/authStore'
 
+import { ORDER_STATUS } from '../../utils/consts';
+
+export function OrderRow({btnMode, orderNumber, orderItemsArray, orderId, prepairedMenuItems}) {
 
   const [play] = useSound(ringSfx)
 
-  function pushToReleaseArrayHandler (orderId) {
-    mainStore.addToReleaseOrderArray(orderId)
+  function pushToReleaseArrayHandler () {
+    orderStore.updateStatus(orderId, ORDER_STATUS.READY)
     play()
   }
 
   function pushToHistoryArrayHandler (orderId) {
-    mainStore.addToHistoryArray(orderId)
+    orderStore.updateStatus(orderId, ORDER_STATUS.COMPLETED)
   }
   return (
   <>
@@ -65,8 +69,8 @@ export function OrderRow({btnMode, orderNumber, orderItemsArray, orderId, prepai
           btnMode === 'kitchen' ?
         <button 
         className={`btn btn-danger`}
-        disabled = {orderItemsArray.length !== prepairedMenuItems}
-        onClick={() => {pushToReleaseArrayHandler(orderId)}}
+        // disabled = {orderItemsArray.length !== prepairedMenuItems}
+        onClick={pushToReleaseArrayHandler}
         >
           Готов
         </button>
