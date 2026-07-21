@@ -8,6 +8,7 @@ import { HistoryExcelExporter } from './HistoryExcelExporter/HistoryExcelExporte
 
 
 export const HistoryPage = observer(() => {
+  // to do пока не работает
 
   const [query, setQuery] = useState('')
 

@@ -1,20 +1,26 @@
-import React from 'react';
+import {React, useEffect} from 'react';
 import './ReleaseOrderPage.css';
 import { OrderRow } from '../OrderRow/OrderRow';
-import mainStore from '../../store/mainStore';
 import { observer } from 'mobx-react-lite';
+import { orderStore } from '../../store/orderStore';
+import authStore  from '../../store/authStore'
 
 
 
 export const ReleaseOrderPage = observer(() => {
+
+    function allToHistoryBtnHandler(){
+      console.log('allToHistoryBtnHandler')
+    }
+
   return (
 
     <>
-      {mainStore.releaseOrderArray.length ?
+      {orderStore.releaseOrders.length ?
         <div className='container'>
           <div className="row justify-content-end">
             <button className='btn btn-success col-6 col-lg-3 mb-3'
-              onClick={() => (mainStore.addAllToHistoryArray())}
+              onClick={allToHistoryBtnHandler}
             >
               Выдать все заказы
             </button>
@@ -32,13 +38,13 @@ export const ReleaseOrderPage = observer(() => {
           </div>
 
           {
-            mainStore.releaseOrderArray.map((item) => (
+            orderStore.releaseOrders.map((o) => (
               <OrderRow
                 btnMode={'release'}
-                key={item.orderId}
-                orderNumber={item.orderNumber}
-                orderItemsArray={item.orderItemsArray}
-                orderId={item.orderId} />
+                key={o.id}
+                orderNumber={o.orderNumber}
+                orderItemsArray={o.items}
+                orderId={o.id} />
             ))
           }
 

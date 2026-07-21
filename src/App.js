@@ -1,17 +1,21 @@
+import { React, useEffect } from 'react'
+import './App.css'
+import AppRouter from './shared/AppRouter'
+import { Header } from './shared/Header/Header'
 
-import './App.css';
-import { Header } from './shared/Header/Header';
-import { Main } from './shared/Main';
+import { orderStore } from './store/orderStore'
+import authStore from './store/authStore'
+
 
 function App() {
   return (
     <div className="App">
       <>
-      <Header/>
-      <Main/>
+        <Header />
+        <AppRouter />
       </>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

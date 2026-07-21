@@ -1,12 +1,16 @@
-import './InProcessBoard.css';
-import { OrderNumber } from '../OrderNumber/OrderNumber';
-import mainStore from '../../../store/mainStore';
-import { observer } from 'mobx-react-lite';
-import 'animate.css';
+import './InProcessBoard.css'
+import {React, useEffect} from 'react'
+import { OrderNumber } from '../OrderNumber/OrderNumber'
+import mainStore from '../../../store/mainStore'
+import { observer } from 'mobx-react-lite'
+import 'animate.css'
+
+import authStore from '../../../store/authStore'
+import { orderStore } from '../../../store/orderStore'
 
 
 export const InProcessBoard = observer(() => {
-  function navigationOpenerHandler () {
+  function navigationOpenerHandler() {
     mainStore.isNavigationOpen = !mainStore.isNavigationOpen
   }
 
@@ -15,27 +19,27 @@ export const InProcessBoard = observer(() => {
       <h1 className='display-4 text-danger mb-5'>В процессе</h1>
       <div className="row">
         {
-          mainStore.orderArray.map((item) => (
-            <OrderNumber orderNumber={item.orderNumber} bootstrapColorClass={'danger'} key={item.orderId} />
+          orderStore.kitchenOrders.map((item) => (
+            <OrderNumber orderNumber={item.orderNumber} bootstrapColorClass={'danger'} key={item.id} />
           ))
         }
 
 
 
       </div>
-      <button 
-      className='btn btn-outline-secondary btm-menu-open animate__animated animate__headShake'
-      onClick = {()=>{navigationOpenerHandler ()}}
+      <button
+        className='btn btn-outline-secondary btm-menu-open animate__animated animate__headShake'
+        onClick={() => { navigationOpenerHandler() }}
       >
         {
           mainStore.isNavigationOpen
-          ?
-          'Закрыть '
-          :
-          'Открыть '
+            ?
+            'Закрыть '
+            :
+            'Открыть '
         }
-         навигацию
+        навигацию
       </button>
     </div>
-  );
+  )
 })

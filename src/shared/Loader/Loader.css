@@ -1,0 +1,34 @@
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1060;
+  pointer-events: all;
+  /* Плавный переход для прозрачности фона */
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+}
+
+/* Стили для белой карточки внутри */
+.loader-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Состояния при ПОЯВЛЕНИИ (isLoading === true) */
+.loader-overlay.fade-in {
+  opacity: 1;
+}
+.loader-card.scale-up {
+  transform: scale(1);
+}
+
+/* Состояния при ИСЧЕЗНОВЕНИИ (isLoading === false) */
+.loader-overlay.fade-out {
+  opacity: 0;
+}
+.loader-card.scale-down {
+  transform: scale(0.9); /* Карточка слегка уменьшается при закрытии */
+}
