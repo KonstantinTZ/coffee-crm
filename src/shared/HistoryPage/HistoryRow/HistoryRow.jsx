@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import './HistoryRow.css';
-import { HistoryItem } from '../HistoryItem/HistoryItem';
-import { HistoryModal } from '../HistoryModal/HistoryModal';
-import mainStore from '../../../store/mainStore';
+import React, { useState } from 'react'
+import './HistoryRow.css'
+import { HistoryItem } from '../HistoryItem/HistoryItem'
+import { HistoryModal } from '../HistoryModal/HistoryModal'
+import { orderStore } from '../../../store/orderStore'
 
-
-export function HistoryRow({ orderTime, orderNumber, orderSumm, orderArray, orderId }) {
+export function HistoryRow({ orderCreatedAt, orderNumber, orderSumm, orderArray, orderId }) {
   const [isModalOpend, setIsModalOpend] = useState(false)
   function changeBtnHandler() {
-    setIsModalOpend(true);
-    mainStore.copyHistoryArrayFn()
+    setIsModalOpend(true)
   }
+
+  const [time] = useState(orderCreatedAt.toDate())
+
   return (
     <>
       <tr>
-        <th scope="row" >{orderTime}</th>
+        <th scope="row" >{time.toLocaleTimeString()}</th>
         <th>{orderNumber}</th>
         <th>{orderArray.length ? `${orderSumm} у.е.` : '-'}</th>
         <td>
@@ -34,11 +35,11 @@ export function HistoryRow({ orderTime, orderNumber, orderSumm, orderArray, orde
           }
         </td>
         <td>
-          
+
           <button
             className='btn btn-primary'
             onClick={() => { changeBtnHandler() }}
-            disabled = {!orderArray.length}
+            disabled={!orderStore.historyOrders.length}
           >
             Изменить
           </button>
@@ -53,5 +54,5 @@ export function HistoryRow({ orderTime, orderNumber, orderSumm, orderArray, orde
           orderId={orderId}
         />}
     </>
-  );
+  )
 }

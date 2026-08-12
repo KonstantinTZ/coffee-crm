@@ -1,10 +1,12 @@
 import React from 'react';
 import './HistoryPage.css';
 import { HistoryRow } from './HistoryRow/HistoryRow';
-import mainStore from '../../store/mainStore';
+import { orderStore } from '../../store/orderStore';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { HistoryExcelExporter } from './HistoryExcelExporter/HistoryExcelExporter';
+
+
 
 
 export const HistoryPage = observer(() => {
@@ -14,7 +16,7 @@ export const HistoryPage = observer(() => {
 
   return (
     <>
-      {mainStore.historyArray.length ?
+      {orderStore.historyOrders.length ?
         <div className="container">
           <div className="row justify-content-end">
             <HistoryExcelExporter/>
@@ -51,14 +53,14 @@ export const HistoryPage = observer(() => {
               </thead>
               <tbody>
                 {
-                  mainStore.historyArray.filter((item) => item.orderNumber.toUpperCase().includes(query)).map((item) => (
+                  orderStore.historyOrders.filter((item) => item.orderNumber.toUpperCase().includes(query)).map((item) => (
                     <HistoryRow
-                      orderTime={item.orderTime}
+                      orderCreatedAt={item.createdAt}
                       orderNumber={item.orderNumber}
-                      orderSumm={item.orderTotlaAmaunt}
-                      orderArray={item.orderItemsArray}
-                      key={item.orderId}
-                      orderId={item.orderId}
+                      orderSumm={item.totalAmount}
+                      orderArray={item.items}
+                      key={item.id}
+                      orderId={item.id}
                     />
                   ))
                 }
@@ -69,7 +71,7 @@ export const HistoryPage = observer(() => {
         </div>
         :
         <h2 className='text-secondary'>
-          История заказов пуста
+        История заказов пуста
         </h2>
       }
     </>

@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 import { orderService } from '../firebase/orderService'
 import { auth } from '../firebase/config'
-import { ORDER_STATUS } from '../utils/consts'; 
+import { ORDER_STATUS } from '../utils/consts'
 
 class OrderStore {
 
@@ -30,7 +30,7 @@ class OrderStore {
         this.unsubscribe = orderService.subscribeOrders(
             userId,
             (orders) => {
-                console.log("Firestore update:", orders);
+                console.log("Firestore update:", orders)
 
                 runInAction(() => {
 
@@ -65,7 +65,7 @@ class OrderStore {
     // Создать заказ
     // ======================================
 
-    async createOrder( order) {
+    async createOrder(order) {
         const user = auth.currentUser
         if (!user) return
 
@@ -85,6 +85,24 @@ class OrderStore {
             auth.currentUser.uid,
             orderId,
             status
+        )
+
+    }
+
+    // ======================================
+    // Обновить заказ
+    // ======================================
+
+    async updateOrder(orderId, updates) {
+
+        const user = auth.currentUser
+
+        if (!user) return
+
+        await orderService.updateOrder(
+            auth.currentUser.uid,
+            orderId,
+            updates
         )
 
     }
@@ -164,6 +182,30 @@ class OrderStore {
 
         return this.releaseOrders
 
+    }
+
+
+    // =======================================
+    // Экспорт в Эксель
+    // =======================================
+    // todo доделать, работает не корректно
+
+    exportArray = []
+
+    get exportData() {
+        let newExportObj = {}
+        for (let item of this.orders) {
+            newExportObj.order_date = new Date(item.orderCreatedAt).toLocaleDateString()
+            newExportObj.order_creating_time = item.orderTime
+            newExportObj.order_prepairing_time = new Date(item.orderPrepairedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+            newExportObj.order_number = item.orderNumber
+            newExportObj.order_summ = item.orderTotlaAmaunt
+            newExportObj.order_payment_method = item.orderPaidBy
+
+            // newExportObj.order_items = JSON.stringify(item.orderItemsArray.filter((item) => item.productName))
+            this.exportArray.push(newExportObj)
+        }
+        return this.exportArray
     }
 
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import './ExcelExporterModal.css';
 import ReactDOM from 'react-dom'
 import * as XLSX from 'xlsx';
-import mainStore from '../../../../store/mainStore';
+import { orderStore } from '../../../../store/orderStore';
 
 export function ExcelExporterModal({setIsModalOpend}) {
 
@@ -12,11 +12,10 @@ export function ExcelExporterModal({setIsModalOpend}) {
   function exportHandler () {
     setIsModalOpend(false)
     let workBook = XLSX.utils.book_new()
-    let workSheet = XLSX.utils.json_to_sheet(mainStore.exportData)
+    let workSheet = XLSX.utils.json_to_sheet(orderStore.exportData)
 
     XLSX.utils.book_append_sheet(workBook, workSheet, 'Sheet#1')
     XLSX.writeFile(workBook, `report_${toDayLocale}.xlsx`)
-    mainStore.historyArrayCleaner();
   }
 
   return ReactDOM.createPortal((
@@ -30,7 +29,7 @@ export function ExcelExporterModal({setIsModalOpend}) {
           </div>
           <div className="modal-body">
             <div className="container">
-              <h2 className='text-danger'>Вы хотите экспортировать данные в Excel и очистить историю?</h2>
+              <h2 className='text-danger'>Вы хотите экспортировать данные в Excel</h2>
             </div>
           </div>
           <div className="modal-footer">
