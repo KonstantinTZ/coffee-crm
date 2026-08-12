@@ -1,16 +1,118 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react'
 import ReactDOM from 'react-dom'
-import './HistoryModal.css';
-import { BasketRow } from '../../BasketPaige/BasketRow/BasketRow';
+import './HistoryModal.css'
 import { observer } from "mobx-react-lite"
-import mainStore from '../../../store/mainStore';
+
+import { orderStore } from '../../../store/orderStore'
+import { Loader } from '../../Loader/Loader'
 
 
 export const HistoryModal = observer(({ setIsModalOpend, orderNumber, orderArray, orderSumm, orderId }) => {
 
+  // ======================================
+  // Локальная копия позиций заказа
+  // ======================================
+
+  const [editedItems, setEditedItems] = useState(
+    () => orderArray.map(item => ({ ...item }))
+  )
+
+  const [currency, setCurrency] = useState(orderArray?.[0]?.currency)
+
+  console.log('editedItems->', editedItems)
+
+  const [isSaving, setIsSaving] = useState(false)
+
+  // Если orderArray изменился снаружи
+
+  useEffect(() => {
+
+    setEditedItems(
+      orderArray.map(item => ({ ...item }))
+    )
+
+  }, [orderArray])
+
+
+  // общая сумма после изменений
+
+  const newTotal = useMemo(() => {
+
+    return editedItems.reduce(
+      (total, item) => {
+        return total + item.sellPrice * item.quantity
+      },
+      0
+    )
+
+  }, [editedItems])
+
+  //Возврат клиенту
+
+  const refundAmount = Math.max(0, orderSumm - newTotal)
+
+
   function cancelBtnHandle() {
     setIsModalOpend(false)
-    mainStore.cancelChangesHistoryArrayFn()
+  }
+
+  // Уменьшить количество
+  // ======================================
+
+function decreaseQuantity(index) {
+
+    setEditedItems(prevItems => {
+
+        return prevItems
+            .map((item, itemIndex) => {
+
+                if (itemIndex !== index) {
+                    return item
+                }
+
+                return {
+                    ...item,
+                    quantity: item.quantity - 1
+                }
+
+            })
+            .filter(item => item.quantity > 0)
+
+    })
+
+}
+  // Сохранение
+  // ======================================
+
+  async function saveChanges() {
+
+    try {
+
+      setIsSaving(true)
+
+      await orderStore.updateOrder(
+        orderId,
+        {
+          items: editedItems,
+          totalAmount: newTotal
+        }
+      )
+
+      setIsModalOpend(false)
+
+    } catch (error) {
+
+      console.error(
+        'Ошибка при изменении заказа:',
+        error
+      )
+
+    } finally {
+
+      setIsSaving(false)
+
+    }
+
   }
 
   return ReactDOM.createPortal((
@@ -26,60 +128,66 @@ export const HistoryModal = observer(({ setIsModalOpend, orderNumber, orderArray
             <div className="container">
 
               <div className="row mb-5">
-              {orderArray.length ?
-                <table className="table table-striped table-sm ">
-                  <thead className="table-warning">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Позиция</th>
-                      <th scope="col">Колличество</th>
-                      <th scope="col">Сумма</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                {editedItems.length ?
+                  <table className="table table-striped table-sm ">
+                    <thead className="table-warning">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Позиция</th>
+                        <th scope="col">Колличество</th>
+                        <th scope="col">Сумма</th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
-                    {orderArray.map((item) => (
-                      <BasketRow
-                        rowNumber={orderArray.indexOf(item) + 1}
-                        positionName={item.productName}
-                        positionQuantity={item.quantity}
-                        positionSumm={item.sellPrice * item.quantity}
-                        key={item.id}
-                        id={item.id}
-                        mode={'history'}
-                        orderId={orderId}
-                      />
+                      {editedItems.map((item,index) => (
+                        <tr className='align-middle'>
+                          <th scope="row">{index + 1}</th>
+                          <td>{item.productName}</td>
+                          <td className='d-flex justify-content-center'>
 
-                    ))}
-
-                    {/* <BasketRow rowNumber={1}  positionName={"Кофе капучино S"}  positionQuantity={3} positionSumm={2000}/>
-                      <BasketRow rowNumber={2}  positionName={"Шоколад MARS"}  positionQuantity={1} positionSumm={1000}/> */}
-
-                    <tr>
-                      <th scope="row">Итого</th>
-                      <td></td>
-                      <td></td>
-                      <th>{orderSumm}&nbsp;у.е.</th>
-                    </tr>
-                  </tbody>
-                </table>
-                :
-                <h3 className='text-secondary'>
-                  Все позиции заказа удалены
-                </h3>
-              }
+                            <div className="basket-counter-container d-flex align-items-center">
+                              <button className="btn btn-primary counter-btn-decrease" onClick={()=>{decreaseQuantity(index)}} > - </button>
+                              <span className="counter-display"><b>{item.quantity}</b>&nbsp;шт.</span>
+                              <button className="btn btn-primary counter-btn-increase" disabled={true}> + </button>
+                            </div>
+                          </td>
+                          <td>{item.quantity* item.sellPrice}&nbsp;{item.currency}</td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <th scope="row">Итого</th>
+                        <td></td>
+                        <td></td>
+                        <th>{newTotal}&nbsp;{currency}</th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  :
+                  <h3 className='text-secondary'>
+                    Все позиции заказа удалены
+                  </h3>
+                }
               </div>
+              {refundAmount > 0 && (
               <div className="row mb-5">
-                <h3>Возврат клиенту: <b className='text-danger'>{mainStore.historyChangeCounter(orderId)}</b> у.е. </h3>
+                <h3>Возврат клиенту:
+                  <b className='text-danger'>&nbsp;{refundAmount}</b> {currency}
+                </h3>
               </div>
+              )}
             </div>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { cancelBtnHandle() }}>Отмена</button>
-            <button type="button" className="btn btn-primary" onClick={() => { setIsModalOpend(false) }}>Сохранить изменения</button>
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { cancelBtnHandle() }} disabled={isSaving}>Отмена</button>
+            <button type="button" className="btn btn-primary" onClick={saveChanges} disabled={isSaving}>
+              {isSaving ? 'Сохранение...' : 'Сохранить'}
+              </button>
           </div>
         </div>
       </div>
+      <Loader isLoading={isSaving} />
     </div>
+  
   ), document.getElementById('modal'))
 })

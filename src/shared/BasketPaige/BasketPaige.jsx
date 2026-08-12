@@ -46,7 +46,6 @@ export const BasketPaige = observer(() => {
                     positionCurrency={item.currency}
                     key={item.menuItemId}
                     id={item.menuItemId}
-                    mode={'basket'}
                   />
 
                 ))}
