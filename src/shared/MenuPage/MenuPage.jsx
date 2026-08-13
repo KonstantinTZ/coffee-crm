@@ -2,7 +2,6 @@ import React from 'react'
 import './MenuPage.css'
 import { MenuItem } from '../../../src/shared/MenuPage/MenuItem'
 import { observer } from "mobx-react-lite"
-import mainStore from '../../store/mainStore'
 import { useState, useEffect } from 'react'
 
 // new

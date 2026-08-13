@@ -1,7 +1,7 @@
 import './InProcessBoard.css'
 import {React, useEffect} from 'react'
 import { OrderNumber } from '../OrderNumber/OrderNumber'
-import mainStore from '../../../store/mainStore'
+import {uiStore} from '../../../store/uiStore'
 import { observer } from 'mobx-react-lite'
 import 'animate.css'
 
@@ -11,7 +11,7 @@ import { orderStore } from '../../../store/orderStore'
 
 export const InProcessBoard = observer(() => {
   function navigationOpenerHandler() {
-    mainStore.isNavigationOpen = !mainStore.isNavigationOpen
+    uiStore.isNavigationOpen = !uiStore.isNavigationOpen
   }
 
   return (
@@ -32,7 +32,7 @@ export const InProcessBoard = observer(() => {
         onClick={() => { navigationOpenerHandler() }}
       >
         {
-          mainStore.isNavigationOpen
+          uiStore.isNavigationOpen
             ?
             'Закрыть '
             :

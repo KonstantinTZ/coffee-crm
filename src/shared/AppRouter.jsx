@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
-import mainStore from '../store/mainStore.js'
 import { privateRoutes, publicRoutes } from "../utils/routes"
 import { LOGIN_ROUTE, MENU_ROUTE } from "../utils/consts"
 import { observer } from 'mobx-react-lite'
 import { useStores } from '../store/rootStore.js'
-import { useAuthState } from "react-firebase-hooks/auth"
 
 
 const AppRouter = observer(() => {
