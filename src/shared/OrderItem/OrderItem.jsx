@@ -1,16 +1,11 @@
 import React from 'react';
 import './OrderItem.css';
-// import mainStore from '../../store/mainStore';
 import { observer } from 'mobx-react-lite';
-import mainStore from '../../store/mainStore';
-
-
 
 export const OrderItem = observer(({prepaired, name, volume, quantity,measure, menuItemid, orderId,btnMode}) => {
   
 
   function handlePrepairedClick () {
-    // if (btnMode === 'kitchen') mainStore.setOrderItemSetPrepaired(orderId, menuItemid)
     console.log('handlePrepairedClick')
   }
 

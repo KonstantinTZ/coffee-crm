@@ -1,7 +1,7 @@
 import { React, useEffect } from 'react'
 import './Header.css'
 import { NavLink } from 'react-router-dom'
-import mainStore from '../../store/mainStore'
+import {uiStore} from '../../store/uiStore'
 import { basketStore } from '../../store/basketStore'
 import { observer } from "mobx-react-lite"
 import 'animate.css'
@@ -16,7 +16,7 @@ export const Header = observer(() => {
 
   return (
     <>
-      {mainStore.isNavigationOpen &&
+      {uiStore.isNavigationOpen &&
         <div className="header container sticky-top">
 
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient pt-3 pb-3">

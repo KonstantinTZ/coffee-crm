@@ -1,13 +1,11 @@
-import {React, useEffect} from 'react';
+import {React} from 'react';
 import './OrderRow.css';
 import { OrderItem } from '../../shared/OrderItem'
 
-import mainStore from '../../store/mainStore';
 import useSound from 'use-sound';
 import ringSfx from '../../sound/ringSfx.mp3';
 
 import { orderStore } from '../../store/orderStore';
-import authStore  from '../../store/authStore'
 
 import { ORDER_STATUS } from '../../utils/consts';
 
