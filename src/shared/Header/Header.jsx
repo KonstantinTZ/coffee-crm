@@ -1,4 +1,4 @@
-import {React, useEffect} from 'react'
+import { React, useEffect } from 'react'
 import './Header.css'
 import { NavLink } from 'react-router-dom'
 import mainStore from '../../store/mainStore'
@@ -6,8 +6,9 @@ import { basketStore } from '../../store/basketStore'
 import { observer } from "mobx-react-lite"
 import 'animate.css'
 import { useStores } from '../../store/rootStore'
-import { orderStore } from '../../store/orderStore';
-import authStore  from '../../store/authStore'
+import { orderStore } from '../../store/orderStore'
+import { LogOut } from '../LogOut'
+import authStore from '../../store/authStore'
 
 export const Header = observer(() => {
   const { auth } = useStores()
@@ -20,7 +21,39 @@ export const Header = observer(() => {
 
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient pt-3 pb-3">
             <div className="container-fluid">
-              <NavLink className="navbar-brand" to="/settings">XPresso</NavLink>
+              {
+                !user ?
+                  <NavLink className="navbar-brand" to="/settings">XPresso</NavLink>
+                  :
+                  <div className="dropdown">
+                    <button
+                      className="btn dropdown-toggle navbar-brand"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <span>XPresso</span>
+                      &nbsp;|&nbsp;
+                      <img src={require(`../../img/settings-icon.png`)} alt="картинка с шестеренкой" />
+                    </button>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li>
+                        <span className="dropdown-item">
+                          <NavLink className=" btn btn-outline-primary" to="/settings">Настройки меню</NavLink>
+                        </span>
+                      </li>
+                      <li>
+                        <span className="dropdown-item d-flex justify-content-center">
+                          <LogOut />
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+              }
+
+
+              {/* <NavLink className="navbar-brand" to="/settings">XPresso</NavLink> */}
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
