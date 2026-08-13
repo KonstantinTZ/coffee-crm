@@ -1,17 +1,13 @@
 import { React, useState, useEffect } from 'react'
 import './SettingsPage.css'
 import { observer } from "mobx-react-lite"
-import { useStores } from '../../store/rootStore'
 import { AddItemModal } from '../AddItemModal/AddItemModal'
 import { AddCategoryModal } from '../AddCategoryModal/AddCategoryModal'
 import { Loader } from '../Loader/Loader'
 
 import { menuStore } from '../../store/menuStore'
-import { basketStore } from '../../store/basketStore'
 
 export const SettingsPage = observer(() => {
-  // todo отказаться от useStores
-  const { auth } = useStores()
   const [itemId, setItemId] = useState(null)
   const [isItemModalOpend, setIsItemModalOpend] = useState(false)
   const [isCategoryModalOpend, setIsCategoryModalOpend] = useState(false)
@@ -28,11 +24,6 @@ export const SettingsPage = observer(() => {
       setFilter(menuStore.categoriesForSelect[0].value)
     }
   }, [menuStore.categoriesForSelect, filter])
-
-  function logOutBtnHandler () {
-    auth.logout()
-    basketStore.clearBasket()
-  }
 
   function addItemBtnHandler() {
     setIsItemModalOpend(true)
@@ -59,27 +50,16 @@ export const SettingsPage = observer(() => {
 
   return (
     <div className="main container pt-3 pb-3">
-      {/* logout */}
-      <div className="row">
-        <div className="col-2 "></div>
-        <div className="col-2 "></div>
-        <div className="col-2 "></div>
-        <div className="col-2 "></div>
-        <div className="col-2 ">
-          <p className='text-secondary'>
-            Вы авторизованы как: &nbsp;
-            {auth.user.email}
-          </p>
-        </div>
-        <div className="col-2 d-flex align-items-center justify-content-end">
-          <button className="btn btn-danger pl-2" onClick={logOutBtnHandler}>
-            Выйти
-          </button>
-        </div>
-      </div>
-
       <div className="row mb-3">
-
+        <h3 className='text-secondary'>
+          Настройки меню
+        </h3>
+        <p className='text-secondary'>
+          Добавьте категории и пункты меню
+        </p>
+      </div>
+      {/* строка с категориями */}
+      <div className="row mb-3">
         <ul className="nav nav-tabs flex-nowrap">
           {menuStore.categoriesForSelect.map((item) => (
             <li key={item.value} className="nav-item">
@@ -124,7 +104,7 @@ export const SettingsPage = observer(() => {
             <div className="row row-cols-auto">
               {/* кнопка добавить пункт/загрузка пунктов */}
               {menuStore.getItemsByCategoryId(filter).map((item) => (
-                <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12  mb-3">
+                <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12  mb-3" title="Кликните для внесения изменений">
                   <div className={`card h-100 `} onClick={() => { changeItemBtnHandler(item.id) }}>
                     <img
                       src={require(`../../../src/img/no-image-plug.png`)}
@@ -141,7 +121,7 @@ export const SettingsPage = observer(() => {
 
               ))}
 
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12  mb-3">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12  mb-3" title="Добавьте пункт меню">
                 <div className={`card h-100`} onClick={addItemBtnHandler}>
                   <div className="card-body d-flex align-items-center justify-content-center" title="добавить пункт меню">
                     <img src={require(`../../../src/img/add-item.png`)} alt="Добавить пункт меню" />

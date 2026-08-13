@@ -1,6 +1,6 @@
 .clock {
     font-style: italic; 
     display: inline-flex;
-    width: 250px; /* что бы часы не скакали */
+    width: 290px; /* что бы часы не скакали */
     text-align: right;
 }
