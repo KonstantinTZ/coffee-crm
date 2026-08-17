@@ -17,7 +17,7 @@ export const Header = observer(() => {
   return (
     <>
       {uiStore.isNavigationOpen &&
-        <div className="header container sticky-top">
+        <div className="header container-xxl sticky-top">
 
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient pt-3 pb-3">
             <div className="container-fluid">
