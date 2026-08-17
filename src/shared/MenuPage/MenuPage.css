@@ -1,0 +1,11 @@
+.info-card-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.info-card-btn img {
+    width: 20px;
+    height: 20px;
+}

@@ -7,7 +7,11 @@ class OrderStore {
 
     orders = [];
 
+    history = []
+
     unsubscribe = null;
+
+    historyUnsubscribe = null;
 
     loading = false;
 
@@ -46,6 +50,42 @@ class OrderStore {
     }
 
     // ======================================
+    // подписка для истории, что бы фильтровать по дате
+    // ======================================
+
+    subscribeHistoryByDate(startDate, endDate) {
+
+        const user = auth.currentUser
+
+        if (!user) return
+
+        if (this.unsubscribeHistory) {
+            this.unsubscribeHistory()
+        }
+
+        this.loading = true
+
+        this.unsubscribeHistory =
+            orderService.subscribeHistoryByDate(
+                user.uid,
+                startDate,
+                endDate,
+                (orders) => {
+
+                    runInAction(() => {
+
+                        this.history = orders
+
+                        this.loading = false
+
+                    })
+
+                }
+            )
+
+    }
+
+    // ======================================
     // Отключиться
     // ======================================
 
@@ -60,6 +100,20 @@ class OrderStore {
         }
 
     }
+
+unsubscribeHistory() {
+
+    if (this.historyUnsubscribe) {
+
+        this.historyUnsubscribe()
+
+        this.historyUnsubscribe = null
+
+    }
+
+}
+
+
 
     // ======================================
     // Создать заказ
@@ -162,9 +216,7 @@ class OrderStore {
 
     get historyOrders() {
 
-        return this.orders.filter(
-            order => order.status === ORDER_STATUS.COMPLETED
-        )
+        return this.history
 
     }
 
@@ -190,23 +242,51 @@ class OrderStore {
     // =======================================
     // todo доделать, работает не корректно
 
-    exportArray = []
+get exportData() {
 
-    get exportData() {
-        let newExportObj = {}
-        for (let item of this.orders) {
-            newExportObj.order_date = new Date(item.orderCreatedAt).toLocaleDateString()
-            newExportObj.order_creating_time = item.orderTime
-            newExportObj.order_prepairing_time = new Date(item.orderPrepairedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-            newExportObj.order_number = item.orderNumber
-            newExportObj.order_summ = item.orderTotlaAmaunt
-            newExportObj.order_payment_method = item.orderPaidBy
+    return this.history.map((item) => {
 
-            // newExportObj.order_items = JSON.stringify(item.orderItemsArray.filter((item) => item.productName))
-            this.exportArray.push(newExportObj)
+        const createdAt = item.createdAt?.toDate()
+        const completedAt = item.completedAt?.toDate()
+
+        return {
+
+            'Дата заказа': createdAt
+                ? createdAt.toLocaleDateString()
+                : '',
+            'Номер заказа': item.orderNumber,
+
+            'Время создания': createdAt
+                ? createdAt.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+                : '',
+
+            'Время готовности': completedAt
+                ? completedAt.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+                : '',
+
+            'Способ оплаты': item.paymentMethod,
+
+            'Позиции': item.items
+                ?.filter(item => item.productName)
+                .map(item =>
+                    `${item.productName} × ${item.quantity}`
+                )
+                .join(', ') || '',
+
+            'Сумма заказа': item.totalAmount,
+            'Себестоимость заказа': item.totalCost,
+
         }
-        return this.exportArray
-    }
+
+    })
+
+}
 
 }
 

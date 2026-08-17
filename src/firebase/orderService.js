@@ -12,7 +12,8 @@ import {
     where,
     orderBy,
     onSnapshot,
-    serverTimestamp
+    serverTimestamp,
+    Timestamp
 } from 'firebase/firestore'
 
 class OrderService {
@@ -111,6 +112,49 @@ class OrderService {
             this.getOrdersRef(userId),
             where('status', '==', status),
             orderBy('createdAt')
+        )
+
+        return onSnapshot(q, (snapshot) => {
+
+            const orders = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+
+            callback(orders)
+
+        })
+
+    }
+
+    // ======================================
+    // Подписка по дате
+    // ======================================
+
+    subscribeHistoryByDate(userId, startDate, endDate, callback) {
+
+        const q = query(
+            this.getOrdersRef(userId),
+
+            where(
+                'status',
+                '==',
+                'completed'
+            ),
+
+            where(
+                'createdAt',
+                '>=',
+                Timestamp.fromDate(startDate)
+            ),
+
+            where(
+                'createdAt',
+                '<',
+                Timestamp.fromDate(endDate)
+            ),
+
+            orderBy('createdAt', 'desc')
         )
 
         return onSnapshot(q, (snapshot) => {

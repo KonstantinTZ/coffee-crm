@@ -12,6 +12,8 @@ class BasketStore {
     basketArray = [];
     paymentMethodVar = '';
     orderAmount = 0;
+    // себестоимость
+    orderCost = 0;
     orderArray = [];
 
     constructor() {
@@ -54,6 +56,7 @@ class BasketStore {
 
 
         this.calculateTotal()
+        this.calculateCost()
     }
 
     // Поиск категории элемента
@@ -119,10 +122,18 @@ class BasketStore {
         }, 0)
     }
 
+    // Подсчет общей себестоимости
+    calculateCost() {
+        this.orderCost = this.basketArray.reduce((total, item) => {
+            return total + (item.costPrice * item.quantity)
+        }, 0)
+    }
+
     // Очистка корзины
     clearBasket() {
         this.basketArray = []
         this.orderAmount = 0
+        this.orderCost = 0
         this.paymentMethodVar = ''
     }
 
@@ -140,6 +151,7 @@ class BasketStore {
             orderNumber: ticketGenerator(),
             items: [...this.basketArray],
             totalAmount: this.orderAmount,
+            totalCost: this.orderCost,
             paymentMethod: this.paymentMethodVar,
             status: ORDER_STATUS.COOKING, // new, cooking, ready, delivered
             createdAt: new Date().toISOString(),
