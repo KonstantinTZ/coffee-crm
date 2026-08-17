@@ -13,7 +13,7 @@ const AppRouter = observer(() => {
 
     return user ?
         (
-            <div className="main container pt-3 pb-3">
+            <div className="main container-xxl pt-3 pb-3">
                 <Routes>
                     {privateRoutes.map(({ path, Component }) =>
                         <Route key={path} path={path} element={Component} exact={true} />

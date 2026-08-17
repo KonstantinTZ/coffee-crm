@@ -50,14 +50,7 @@ export const SettingsPage = observer(() => {
 
   return (
     <div className="main container pt-3 pb-3">
-      <div className="row mb-3">
-        <h3 className='text-secondary'>
-          Настройки меню
-        </h3>
-        <p className='text-secondary'>
-          Добавьте категории и пункты меню
-        </p>
-      </div>
+
       {/* строка с категориями */}
       <div className="row mb-3">
         <ul className="nav nav-tabs flex-nowrap">
@@ -89,20 +82,58 @@ export const SettingsPage = observer(() => {
           <>
             <div className="row mb-3">
               {/* кнопка изменить категорю */}
-              <div className="col-2 "></div>
-              <div className="col-2 "></div>
-              <div className="col-2 "></div>
-              <div className="col-2 "></div>
-              <div className="col-2 "></div>
-              <div className="col-2 d-flex align-items-center justify-content-end">
+              <div className="col-2 d-flex align-items-center">
                 <button className="btn btn-warning pl-2" onClick={() => { changeCategoryBtnHandler() }}>
                   Изменить категорию
                 </button>
               </div>
+              <div className="col-2 "></div>
+              <div className="col-2 "></div>
+              <div className="col-2 "></div>
+              <div className="col-2 "></div>
+              <div className="col-2">
+              </div>
             </div>
 
-            <div className="row row-cols-auto">
-              {/* кнопка добавить пункт/загрузка пунктов */}
+            {/* таблица с меню */}
+
+            {/* table */}
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">№</th>
+                  <th scope="col">Название</th>
+                  <th scope="col">Объем</th>
+                  <th scope="col">Цена</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {menuStore.getItemsByCategoryId(filter).map((item, index) => (
+                  <tr>
+                    <th scope="row">{index + 1}</th>
+                    <td>{item.productName}</td>
+                    <td>{item.volume} {item.measure}</td>
+                    <td>{item.sellPrice} {item.currency}</td>
+                    <td>
+                      <button className="btn btn-secondary" onClick={() => { changeItemBtnHandler(item.id) }}>
+                        Изменить
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                <tr title="Добавьте пункт меню">
+                  <td colspan={5} onClick={addItemBtnHandler} >
+                    <img width="25" height="25" src={require(`../../../src/img/add-item.png`)} alt="Добавить пункт" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            {/* карточки */}
+
+            {/* <div className="row row-cols-auto">
               {menuStore.getItemsByCategoryId(filter).map((item) => (
                 <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12  mb-3" title="Кликните для внесения изменений">
                   <div className={`card h-100 `} onClick={() => { changeItemBtnHandler(item.id) }}>
@@ -128,7 +159,8 @@ export const SettingsPage = observer(() => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
+
           </>
           :
           null
