@@ -5,7 +5,7 @@ import { PrepairedBoard } from './PrepairedBoard'
 import { Clock } from '../Clock'
 export function OrderBoardPage() {
   return (
-    <div className="container">
+    <div className="vh-100 w-auto overflow-hidden">
       <div className="row justify-content-end">
         <div class="col-auto pe-0">
           <Clock />
@@ -15,6 +15,6 @@ export function OrderBoardPage() {
         <InProcessBoard />
         <PrepairedBoard />
       </div>
-    </div>
+     </div>
   )
 }

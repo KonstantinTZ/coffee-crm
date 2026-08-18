@@ -30,7 +30,7 @@ export const MenuPage = observer(() => {
   }, [menuStore.categoriesForSelect, filter])
 
   return (
-    <>
+    <div className="container-xxl pt-3 pb-3">
       {
         menuStore.categoriesForSelect.length > 0
           ?
@@ -79,7 +79,7 @@ export const MenuPage = observer(() => {
 
 
       <Loader isLoading={menuStore.isLoading} />
-    </>
+    </div>
 
   )
 })

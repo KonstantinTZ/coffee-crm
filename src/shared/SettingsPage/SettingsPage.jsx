@@ -49,7 +49,7 @@ export const SettingsPage = observer(() => {
   // }
 
   return (
-    <div className="main container pt-3 pb-3">
+    <div className="main container-xxl pt-3 pb-3">
 
       {/* строка с категориями */}
       <div className="row mb-3">
@@ -105,7 +105,7 @@ export const SettingsPage = observer(() => {
                   <th scope="col">Название</th>
                   <th scope="col">Объем</th>
                   <th scope="col">Цена</th>
-                  <th scope="col"></th>
+                  <th scope="col text-end">Действие</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,11 +164,7 @@ export const SettingsPage = observer(() => {
           </>
           :
           null
-
       }
-
-
-
 
       {isItemModalOpend &&
         <AddItemModal
