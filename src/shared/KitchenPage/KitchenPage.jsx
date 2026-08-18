@@ -15,7 +15,7 @@ export const KitchenPage = observer(() => {
   return (
     <>
       {orderStore.kitchenOrders.length ?
-        <div className='container'>
+        <div className='container-xxl pt-3 pb-3'>
           <div className="table-head row text-bg-light p-3 d-none d-lg-flex">
             <div className="col-1">
               <b>Номер</b>

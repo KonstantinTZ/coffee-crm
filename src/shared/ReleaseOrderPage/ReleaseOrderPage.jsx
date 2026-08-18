@@ -17,14 +17,15 @@ export const ReleaseOrderPage = observer(() => {
 
     <>
       {orderStore.releaseOrders.length ?
-        <div className='container'>
-          <div className="row justify-content-end">
+        <div className='container-xxl pt-3 pb-3'>
+          {/* выдать все заказы - в разработке */}
+          {/* <div className="row justify-content-end">
             <button className='btn btn-success col-6 col-lg-3 mb-3'
               onClick={allToHistoryBtnHandler}
             >
               Выдать все заказы
             </button>
-          </div>
+          </div> */}
           <div className="table-head row text-bg-light p-3 d-none d-lg-flex">
             <div className="col-1">
               <b>Номер</b>

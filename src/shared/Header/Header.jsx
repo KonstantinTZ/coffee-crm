@@ -19,7 +19,7 @@ export const Header = observer(() => {
       {uiStore.isNavigationOpen &&
         <div className="header container-xxl sticky-top">
 
-          <nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient pt-3 pb-3">
+          <nav className="navbar navbar-expand-md navbar-dark bg-primary bg-gradient pt-3 pb-3">
             <div className="container-fluid">
               {
                 !user ?
@@ -54,10 +54,10 @@ export const Header = observer(() => {
 
 
               {/* <NavLink className="navbar-brand" to="/settings">XPresso</NavLink> */}
-              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
-              <div className="collapse navbar-collapse" id="navbarColor02">
+              <div className="collapse navbar-collapse" id="navbarMain">
                 {
                   user ?
                     <>
@@ -69,7 +69,7 @@ export const Header = observer(() => {
                           <NavLink className="nav-link position-relative" activeclassname={"active"} to="/kitchen">
                             Кухня&nbsp;
                             {orderStore.kitchenOrders.length ?
-                              <span className={`position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger animate__animated animate__flash animate__slow`}>
+                              <span className={`position-absolute top-1 start-4 translate-middle badge rounded-pill bg-danger animate__animated animate__flash animate__slow`}>
                                 {`${orderStore.kitchenOrders.length}`}
                                 <span className="visually-hidden">Колличество заказов на кухне</span>
                               </span> : ''}
@@ -79,7 +79,7 @@ export const Header = observer(() => {
                           <NavLink className="nav-link position-relative" activeclassname={"active"} to="/release">
                             Выдача&nbsp;
                             {orderStore.releaseOrders.length ?
-                              <span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger animate__animated animate__flash animate__slow">
+                              <span className="position-absolute top-1 start-4 translate-middle badge rounded-pill bg-danger animate__animated animate__flash animate__slow">
                                 {`${orderStore.releaseOrders.length}`}
                                 <span className="visually-hidden">Колличество заказов на выдачу</span>
                               </span> : ''}

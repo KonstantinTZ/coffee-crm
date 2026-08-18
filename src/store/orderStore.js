@@ -101,17 +101,17 @@ class OrderStore {
 
     }
 
-unsubscribeHistory() {
+    unsubscribeHistory() {
 
-    if (this.historyUnsubscribe) {
+        if (this.historyUnsubscribe) {
 
-        this.historyUnsubscribe()
+            this.historyUnsubscribe()
 
-        this.historyUnsubscribe = null
+            this.historyUnsubscribe = null
+
+        }
 
     }
-
-}
 
 
 
@@ -240,53 +240,52 @@ unsubscribeHistory() {
     // =======================================
     // Экспорт в Эксель
     // =======================================
-    // todo доделать, работает не корректно
 
-get exportData() {
+    get exportData() {
 
-    return this.history.map((item) => {
+        return this.history.map((item) => {
 
-        const createdAt = item.createdAt?.toDate()
-        const completedAt = item.completedAt?.toDate()
+            const createdAt = item.createdAt?.toDate()
+            const completedAt = item.completedAt?.toDate()
 
-        return {
+            return {
 
-            'Дата заказа': createdAt
-                ? createdAt.toLocaleDateString()
-                : '',
-            'Номер заказа': item.orderNumber,
+                'Дата заказа': createdAt
+                    ? createdAt.toLocaleDateString()
+                    : '',
+                'Номер заказа': item.orderNumber,
 
-            'Время создания': createdAt
-                ? createdAt.toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })
-                : '',
+                'Время создания': createdAt
+                    ? createdAt.toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })
+                    : '',
 
-            'Время готовности': completedAt
-                ? completedAt.toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })
-                : '',
+                'Время готовности': completedAt
+                    ? completedAt.toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })
+                    : '',
 
-            'Способ оплаты': item.paymentMethod,
+                'Способ оплаты': item.paymentMethod,
 
-            'Позиции': item.items
-                ?.filter(item => item.productName)
-                .map(item =>
-                    `${item.productName} × ${item.quantity}`
-                )
-                .join(', ') || '',
+                'Позиции': item.items
+                    ?.filter(item => item.productName)
+                    .map(item =>
+                        `${item.productName} × ${item.quantity}`
+                    )
+                    .join(', ') || '',
 
-            'Сумма заказа': item.totalAmount,
-            'Себестоимость заказа': item.totalCost,
+                'Сумма заказа': item.totalAmount,
+                'Себестоимость заказа': item.totalCost,
 
-        }
+            }
 
-    })
+        })
 
-}
+    }
 
 }
 

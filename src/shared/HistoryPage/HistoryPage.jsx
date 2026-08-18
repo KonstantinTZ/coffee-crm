@@ -81,7 +81,7 @@ export const HistoryPage = observer(() => {
   return (
     <>
       
-        <div className="container">
+        <div className="container-xxl pt-3 pb-3">
           <div className="row justify-content-end">
             <HistoryExcelExporter />
           </div>

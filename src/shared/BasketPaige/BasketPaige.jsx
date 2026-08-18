@@ -18,8 +18,7 @@ export const BasketPaige = observer(() => {
   return (
     <>
       {basketStore.basketArray.length ?
-
-        <div className="container">
+        <div className="container-xxl pt-3 pb-3">
           <div className="row mb-4">
             <h1 className='text-danger '>
               Проверьте заказ
