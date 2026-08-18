@@ -59,11 +59,12 @@ export const MenuPage = observer(() => {
                   imgPath={item.imgPath}
                   productName={item.productName}
                   sellPrice={item.sellPrice}
-                  key={item.id}
+                  key={item.productName}
                   currency={item.currency}
                   volume={item.volume}
                   measure={item.measure}
                   quantity={item.quantity}
+                  descr={item.descr}
                 />
               ))}
 
