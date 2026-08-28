@@ -25,7 +25,7 @@ export const LoginForm = observer(() => {
 
 
   return (
-    <form onSubmit={handleSubmit} className="col-4 card text-start p-3 m-2" id="login-form">
+    <form onSubmit={handleSubmit} className="col-md-4 card text-start p-3" id="login-form">
       <h5 className="card-title">Войти</h5>
       <div className="form-floating mb-3">
         <input

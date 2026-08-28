@@ -1,17 +1,16 @@
-import {React, useEffect} from 'react';
-import './ReleaseOrderPage.css';
-import { OrderRow } from '../OrderRow/OrderRow';
-import { observer } from 'mobx-react-lite';
-import { orderStore } from '../../store/orderStore';
-import authStore  from '../../store/authStore'
-
+import { React, useEffect } from 'react'
+import './ReleaseOrderPage.css'
+import { OrderRow } from '../OrderRow/OrderRow'
+import { observer } from 'mobx-react-lite'
+import { orderStore } from '../../store/orderStore'
+import { NavLink } from 'react-router-dom'
 
 
 export const ReleaseOrderPage = observer(() => {
 
-    function allToHistoryBtnHandler(){
-      console.log('allToHistoryBtnHandler')
-    }
+  function allToHistoryBtnHandler() {
+    console.log('allToHistoryBtnHandler')
+  }
 
   return (
 
@@ -55,10 +54,15 @@ export const ReleaseOrderPage = observer(() => {
     <OrderRow btnName={'Выдан'}/> */}
         </div>
         :
-        <h2 className='text-secondary'>
-          Ни один заказ еще не готов
-        </h2>
+        <div className='container-xxl pt-3 pb-3'>
+          <h2 className='text-secondary'>
+            Ни один заказ еще не готов
+          </h2>
+          <p className="text-secondary"> 
+            Здесь появятся заказы, отмеченные оператором как готовые на странице <NavLink className="link text-primary" to="/kitchen" title='Перейти на страницу Кухня'>"Кухня"</NavLink>
+          </p>
+        </div>
       }
     </>
-  );
+  )
 })

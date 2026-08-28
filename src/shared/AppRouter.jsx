@@ -23,14 +23,13 @@ const AppRouter = observer(() => {
         )
         :
         (
-            <div className="main container pt-3 pb-3">
-                <Routes>
-                    {publicRoutes.map(({ path, Component }) =>
-                        <Route key={path} path={path} element={Component} exact={true} />
-                    )}
-                    <Route path="*" element={<Navigate to={LOGIN_ROUTE} replace />} />
-                </Routes>
-            </div>
+            <Routes>
+                {publicRoutes.map(({ path, Component }) =>
+                    <Route key={path} path={path} element={Component} exact={true} />
+                )}
+                <Route path="*" element={<Navigate to={LOGIN_ROUTE} replace />} />
+            </Routes>
+
         )
 })
 

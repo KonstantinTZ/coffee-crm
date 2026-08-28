@@ -3,6 +3,7 @@ import './MenuPage.css'
 import { MenuItem } from '../../../src/shared/MenuPage/MenuItem'
 import { observer } from "mobx-react-lite"
 import { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 
 // new
 
@@ -72,9 +73,14 @@ export const MenuPage = observer(() => {
 
           </>
           :
+          <>
           <h2 className='text-secondary'>
             Нет ни одной позиции меню
           </h2>
+          <p className="text-secondary"> 
+            Добавьте категории и соответствующие пункты меню на странице <NavLink className="link text-primary" to="/settings" title='Перейти на страницу настроек меню'>"Настройки меню"</NavLink>
+          </p>
+          </>
       }
 
 

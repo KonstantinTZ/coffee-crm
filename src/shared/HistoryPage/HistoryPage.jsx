@@ -6,6 +6,8 @@ import { observer } from 'mobx-react-lite'
 import { useState, useEffect } from 'react'
 import { HistoryExcelExporter } from './HistoryExcelExporter/HistoryExcelExporter'
 
+import { NavLink } from 'react-router-dom'
+
 
 
 
@@ -80,7 +82,7 @@ export const HistoryPage = observer(() => {
 
   return (
     <>
-      
+      {orderStore.historyOrders.length ?
         <div className="container-xxl pt-3 pb-3">
           <div className="row justify-content-end">
             <HistoryExcelExporter />
@@ -119,8 +121,6 @@ export const HistoryPage = observer(() => {
                 onClick={() => setQuery('')}></button>
             </div>
           </div>
-
-        {orderStore.historyOrders.length ?
           <div className="row mb-5">
             <table className="table table-striped align-middle table-sm">
               <thead className="table-warning">
@@ -148,15 +148,17 @@ export const HistoryPage = observer(() => {
               </tbody>
             </table>
           </div>
-          :
-        <h2 className='text-secondary'>
-          История заказов пуста
-        </h2>
-        }
-
         </div>
-        
-      
+        :
+        <div className='container-xxl pt-3 pb-3'>
+          <h2 className='text-secondary'>
+            История заказов пуста
+          </h2>
+          <p className="text-secondary">
+            Здесь появятся заказы, отмеченные оператором как выданные клиенту на странице <NavLink className="link text-primary" to="/release" title='Перейти на страницу Выдача'>"Выдача"</NavLink>
+          </p>
+        </div>
+      }
     </>
   )
 })
