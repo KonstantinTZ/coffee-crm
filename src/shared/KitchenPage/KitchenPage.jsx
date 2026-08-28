@@ -3,11 +3,8 @@ import './KitchenPage.css'
 import { OrderRow } from '../OrderRow/OrderRow'
 import { observer } from 'mobx-react-lite'
 
-import { orderStore } from '../../store/orderStore';
-import authStore  from '../../store/authStore'
-import { useEffect } from 'react'
-
-import { toJS } from 'mobx'
+import { orderStore } from '../../store/orderStore'
+import { NavLink } from 'react-router-dom'
 
 
 export const KitchenPage = observer(() => {
@@ -43,9 +40,14 @@ export const KitchenPage = observer(() => {
       <OrderRow btnName={'Готов'}/> */}
         </div>
         :
-        <h2 className='text-secondary'>
-          Нет ни одного заказа
-        </h2>
+        <div className='container-xxl pt-3 pb-3'>
+          <h2 className='text-secondary'>
+            Нет ни одного заказа
+          </h2>
+          <p className="text-secondary"> 
+            Здесь появятся заказы, подтвержденные оператором на странице <NavLink className="link text-primary" to="/basket" title='Перейти на страницу Заказ'>"Заказ"</NavLink>
+          </p>
+        </div>
       }
     </>
 

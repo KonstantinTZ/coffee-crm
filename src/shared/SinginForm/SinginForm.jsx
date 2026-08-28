@@ -24,7 +24,7 @@ export const SinginForm = observer(() => {
 
   
   return (
-    <form className="col-4 card text-start p-3 m-2" id="singin-form" onSubmit={handleSubmit}>
+    <form className="col-md-4 card text-start p-3" id="singin-form" onSubmit={handleSubmit}>
       <h5 className="card-title">Зарегистрироваться</h5>
       <div className="form-floating mb-3">
         <input

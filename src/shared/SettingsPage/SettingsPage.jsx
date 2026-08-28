@@ -52,29 +52,51 @@ export const SettingsPage = observer(() => {
     <div className="main container-xxl pt-3 pb-3">
 
       {/* строка с категориями */}
-      <div className="row mb-3">
-        <ul className="nav nav-tabs flex-nowrap">
-          {menuStore.categoriesForSelect.map((item) => (
-            <li key={item.value} className="nav-item">
-              <button
-                className={`nav-link ${filter === item.value ? 'active' : ''}`}
-                onClick={() => setFilter(item.value)}
-              >
-                {item.label}</button>
-            </li>
-          ))}
+      {
+        menuStore.categoriesForSelect.length > 0
+          ?
 
-          <li className="nav-item" title="добавить категорию">
-            <button className={`nav-link `}
-              onClick={addCategoryBtnHandler}
-            >
-              <img width="25" height="25" src={require(`../../../src/img/add-item.png`)} alt="Добавить пункт" />
-            </button>
-          </li>
-        </ul>
+          <div className="row mb-3">
+            <ul className="nav nav-tabs flex-nowrap">
+              {menuStore.categoriesForSelect.map((item) => (
+                <li key={item.value} className="nav-item">
+                  <button
+                    className={`nav-link ${filter === item.value ? 'active' : ''}`}
+                    onClick={() => setFilter(item.value)}
+                  >
+                    {item.label}</button>
+                </li>
+              ))}
 
+              <li className="nav-item" title="добавить категорию">
+                <button className={`nav-link `}
+                  onClick={addCategoryBtnHandler}
+                >
+                  <img width="25" height="25" src={require(`../../../src/img/add-item.png`)} alt="Добавить пункт" />
+                </button>
+              </li>
+            </ul>
+          </div>
+          :
 
-      </div>
+          <div className="row mb-3 justify-content-center">
+            <h2 className="text-secondary">
+              Страница настроек меню
+            </h2>
+            <p className="text-secondary">
+              На данной старнице вы можете добавлять/изменять категории и соответствующие пункты меню
+            </p>
+            <p className="text-secondary">
+              Пока нет ни одной категории
+            </p>
+
+              <button className="btn btn-warning pl-2 align-self-center w-25" onClick={addCategoryBtnHandler}>
+                Добавить категорию
+              </button>
+
+          </div>
+      }
+
 
       {
         menuStore.categoriesForSelect.length > 0

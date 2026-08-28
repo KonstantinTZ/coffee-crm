@@ -24,7 +24,7 @@ export function OrderRow({btnMode, orderNumber, orderItemsArray, orderId, prepai
   return (
   <>
     <div className="row text-bg-light p-3 border-bottom order-row table-row">
-      <div className="col-1 align-self-center first-table-column sticky-top sticky-hidden d-lg-none">
+      <div className="col-1 align-self-center first-table-column sticky-top sticky-hidden d-md-none">
         <h5>
           {orderNumber}
         </h5>

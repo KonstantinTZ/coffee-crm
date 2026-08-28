@@ -1,4 +1,4 @@
-@media (max-width: 992px) {
+@media (max-width: 767px) {
     .order-row {
         flex-direction: column;
         align-items: center;

@@ -3,6 +3,7 @@ import './BasketPaige.css'
 import { BasketRow } from './BasketRow/BasketRow'
 import { observer } from "mobx-react-lite"
 import { basketStore } from '../../store/basketStore'
+import { NavLink } from 'react-router-dom'
 
 
 export const BasketPaige = observer(() => {
@@ -10,7 +11,7 @@ export const BasketPaige = observer(() => {
   function asseptBtnHandler() {
     basketStore.confirmOrder()
   }
-  
+
   useEffect(() => {
     return () => { basketStore.updateOrderByPaymentMethod('') }
   }, [])
@@ -124,11 +125,16 @@ export const BasketPaige = observer(() => {
           </div>
         </div>
         :
-        <div className="container">
+        <div className="container-xxl pt-3 pb-3">
           {!basketStore.orderArray.length ?
-            <h2 className='text-secondary'>
-              Добавьте позиции из меню
-            </h2>
+            <>
+              <h2 className='text-secondary'>
+                Добавьте позиции из меню
+              </h2>
+              <p className="text-secondary">
+                Добавьте позиции на странице <NavLink className="link text-primary" to="/menu" title='Перейти на страницу меню'>"Меню"</NavLink>
+              </p>
+            </>
             :
             <h1 className='text-danger pt-5'>
               Сообщите номер заказа клиенту : {basketStore.orderArray[basketStore.orderArray.length - 1].orderNumber}
